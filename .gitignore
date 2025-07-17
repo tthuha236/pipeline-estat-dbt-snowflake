@@ -1,0 +1,6 @@
+venv
+data
+.ipynb_checkpoints/
+Untitled.ipynb
+Untitled1.ipynb
+.DS_Store

@@ -1,0 +1,632 @@
+[0m22:56:52.657061 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10b830690>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10b8a2310>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10b8a2790>]}
+
+
+============================== 22:56:52.665701 | 02e17d91-a1f3-476b-977b-4b5fda60c3d3 ==============================
+[0m22:56:52.665701 [info ] [MainThread]: Running with dbt=1.10.4
+[0m22:56:52.666599 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'write_json': 'True', 'log_cache_events': 'False', 'partial_parse': 'True', 'cache_selected_only': 'False', 'warn_error': 'None', 'version_check': 'True', 'debug': 'False', 'log_path': '/Users/tthuha236/Documents/Learning_2025/sidepj/estat_dbt/logs', 'fail_fast': 'False', 'profiles_dir': '/Users/tthuha236/.dbt', 'use_colors': 'True', 'use_experimental_parser': 'False', 'empty': 'False', 'quiet': 'False', 'no_print': 'None', 'log_format': 'default', 'introspect': 'True', 'static_parser': 'True', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'target_path': 'None', 'invocation_command': 'dbt run', 'send_anonymous_usage_stats': 'True'}
+[0m22:56:53.619592 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '02e17d91-a1f3-476b-977b-4b5fda60c3d3', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10c512b10>]}
+[0m22:56:53.680416 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': '02e17d91-a1f3-476b-977b-4b5fda60c3d3', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10c4b3a10>]}
+[0m22:56:53.681945 [info ] [MainThread]: Registered adapter: snowflake=1.10.0
+[0m22:56:53.930691 [debug] [MainThread]: checksum: 073cb5a296270136b24f9c040fdebd0642ef9c263903ef463bfe7e190c538da2, vars: {}, profile: , target: , version: 1.10.4
+[0m22:56:53.931682 [info ] [MainThread]: Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m22:56:53.932146 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'partial_parser', 'label': '02e17d91-a1f3-476b-977b-4b5fda60c3d3', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10c7f04d0>]}
+[0m22:56:55.017510 [warn ] [MainThread]: [[33mWARNING[0m]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.
+There are 1 unused configuration paths:
+- models.estat_dbt.example
+[0m22:56:55.023171 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': '02e17d91-a1f3-476b-977b-4b5fda60c3d3', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10c8019d0>]}
+[0m22:56:55.084528 [debug] [MainThread]: Wrote artifact WritableManifest to /Users/tthuha236/Documents/Learning_2025/sidepj/estat_dbt/target/manifest.json
+[0m22:56:55.088503 [debug] [MainThread]: Wrote artifact SemanticManifest to /Users/tthuha236/Documents/Learning_2025/sidepj/estat_dbt/target/semantic_manifest.json
+[0m22:56:55.121299 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': '02e17d91-a1f3-476b-977b-4b5fda60c3d3', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10caef210>]}
+[0m22:56:55.121841 [info ] [MainThread]: Found 1 model, 477 macros
+[0m22:56:55.122225 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '02e17d91-a1f3-476b-977b-4b5fda60c3d3', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10c5fdbd0>]}
+[0m22:56:55.124130 [info ] [MainThread]: 
+[0m22:56:55.124706 [info ] [MainThread]: Concurrency: 3 threads (target='dev')
+[0m22:56:55.125117 [info ] [MainThread]: 
+[0m22:56:55.125887 [debug] [MainThread]: Acquiring new snowflake connection 'master'
+[0m22:56:55.127066 [debug] [ThreadPool]: Acquiring new snowflake connection 'list_estat_db'
+[0m22:56:55.220277 [debug] [ThreadPool]: Using snowflake connection "list_estat_db"
+[0m22:56:55.220720 [debug] [ThreadPool]: On list_estat_db: show terse schemas in database estat_db
+    limit 10000
+/* {"app": "dbt", "dbt_version": "1.10.4", "profile_name": "estat_dbt", "target_name": "dev", "connection_name": "list_estat_db"} */
+[0m22:56:55.221028 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m22:56:58.737408 [debug] [ThreadPool]: SQL status: SUCCESS 5 in 3.516 seconds
+[0m22:56:58.742301 [debug] [ThreadPool]: Re-using an available connection from the pool (formerly list_estat_db, now list_estat_db_estat_stg)
+[0m22:56:58.762941 [debug] [ThreadPool]: Using snowflake connection "list_estat_db_estat_stg"
+[0m22:56:58.763589 [debug] [ThreadPool]: On list_estat_db_estat_stg: show objects in estat_db.estat_stg
+    limit 10000
+    
+
+/* {"app": "dbt", "dbt_version": "1.10.4", "profile_name": "estat_dbt", "target_name": "dev", "connection_name": "list_estat_db_estat_stg"} */;
+[0m22:56:58.883241 [debug] [ThreadPool]: SQL status: SUCCESS 2 in 0.119 seconds
+[0m22:56:58.889326 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '02e17d91-a1f3-476b-977b-4b5fda60c3d3', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10c948910>]}
+[0m22:56:58.897539 [debug] [Thread-1 (]: Began running node model.estat_dbt.fact_expense
+[0m22:56:58.898816 [info ] [Thread-1 (]: 1 of 1 START sql view model estat_stg.fact_expense ............................. [RUN]
+[0m22:56:58.899845 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly list_estat_db_estat_stg, now model.estat_dbt.fact_expense)
+[0m22:56:58.900639 [debug] [Thread-1 (]: Began compiling node model.estat_dbt.fact_expense
+[0m22:56:58.913828 [debug] [Thread-1 (]: Writing injected SQL for node "model.estat_dbt.fact_expense"
+[0m22:56:58.915679 [debug] [Thread-1 (]: Began executing node model.estat_dbt.fact_expense
+[0m22:56:58.950120 [debug] [Thread-1 (]: Writing runtime sql for node "model.estat_dbt.fact_expense"
+[0m22:56:58.951925 [debug] [Thread-1 (]: Using snowflake connection "model.estat_dbt.fact_expense"
+[0m22:56:58.952404 [debug] [Thread-1 (]: On model.estat_dbt.fact_expense: create or replace   view estat_db.estat_stg.fact_expense
+  
+  
+  
+  
+  as (
+    WITH fact_expense_stg AS (
+    SELECT * FROM ESTAT_DB.ESTAT_STG.fact_expense_stg
+)
+SELECT 
+    CATEGORY_CD,
+    AMOUNT, 
+    AREA_CD, 
+    YEAR,
+    MONTH,
+    CURRENT_TIMESTAMP(),
+    CURRENT_TIMESTAMP()
+FROM fact_expense_stg
+
+/* {"app": "dbt", "dbt_version": "1.10.4", "profile_name": "estat_dbt", "target_name": "dev", "node_id": "model.estat_dbt.fact_expense"} */;
+[0m22:56:59.059677 [debug] [Thread-1 (]: Snowflake adapter: Snowflake query id: 01bdc004-0002-9cc8-0002-73ea0009ab3e
+[0m22:56:59.060672 [debug] [Thread-1 (]: Snowflake adapter: Snowflake error: 001003 (42000): SQL compilation error:
+syntax error line 20 at position 139 unexpected ';'.
+[0m22:56:59.068691 [debug] [Thread-1 (]: Database Error in model fact_expense (models/transformed/fact_expense.sql)
+  001003 (42000): SQL compilation error:
+  syntax error line 20 at position 139 unexpected ';'.
+  compiled code at target/run/estat_dbt/models/transformed/fact_expense.sql
+[0m22:56:59.071837 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '02e17d91-a1f3-476b-977b-4b5fda60c3d3', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10dcb7e10>]}
+[0m22:56:59.072879 [error] [Thread-1 (]: 1 of 1 ERROR creating sql view model estat_stg.fact_expense .................... [[31mERROR[0m in 0.17s]
+[0m22:56:59.073779 [debug] [Thread-1 (]: Finished running node model.estat_dbt.fact_expense
+[0m22:56:59.074584 [debug] [Thread-6 (]: Marking all children of 'model.estat_dbt.fact_expense' to be skipped because of status 'error'.  Reason: Database Error in model fact_expense (models/transformed/fact_expense.sql)
+  001003 (42000): SQL compilation error:
+  syntax error line 20 at position 139 unexpected ';'.
+  compiled code at target/run/estat_dbt/models/transformed/fact_expense.sql.
+[0m22:56:59.077547 [debug] [MainThread]: Connection 'master' was properly closed.
+[0m22:56:59.078105 [debug] [MainThread]: Connection 'model.estat_dbt.fact_expense' was left open.
+[0m22:56:59.078543 [debug] [MainThread]: On model.estat_dbt.fact_expense: Close
+[0m22:56:59.397374 [info ] [MainThread]: 
+[0m22:56:59.398610 [info ] [MainThread]: Finished running 1 view model in 0 hours 0 minutes and 4.27 seconds (4.27s).
+[0m22:56:59.400828 [debug] [MainThread]: Command end result
+[0m22:56:59.445910 [debug] [MainThread]: Wrote artifact WritableManifest to /Users/tthuha236/Documents/Learning_2025/sidepj/estat_dbt/target/manifest.json
+[0m22:56:59.449784 [debug] [MainThread]: Wrote artifact SemanticManifest to /Users/tthuha236/Documents/Learning_2025/sidepj/estat_dbt/target/semantic_manifest.json
+[0m22:56:59.458835 [debug] [MainThread]: Wrote artifact RunExecutionResult to /Users/tthuha236/Documents/Learning_2025/sidepj/estat_dbt/target/run_results.json
+[0m22:56:59.459350 [info ] [MainThread]: 
+[0m22:56:59.459977 [info ] [MainThread]: [31mCompleted with 1 error, 0 partial successes, and 0 warnings:[0m
+[0m22:56:59.460667 [info ] [MainThread]: 
+[0m22:56:59.461513 [error] [MainThread]: [31mFailure in model fact_expense (models/transformed/fact_expense.sql)[0m
+[0m22:56:59.462367 [error] [MainThread]:   Database Error in model fact_expense (models/transformed/fact_expense.sql)
+  001003 (42000): SQL compilation error:
+  syntax error line 20 at position 139 unexpected ';'.
+  compiled code at target/run/estat_dbt/models/transformed/fact_expense.sql
+[0m22:56:59.462928 [info ] [MainThread]: 
+[0m22:56:59.463644 [info ] [MainThread]:   compiled code at target/compiled/estat_dbt/models/transformed/fact_expense.sql
+[0m22:56:59.464189 [info ] [MainThread]: 
+[0m22:56:59.464932 [info ] [MainThread]: Done. PASS=0 WARN=0 ERROR=1 SKIP=0 NO-OP=0 TOTAL=1
+[0m22:56:59.467034 [debug] [MainThread]: Resource report: {"command_name": "run", "command_success": false, "command_wall_clock_time": 6.8960443, "process_in_blocks": "0", "process_kernel_time": 0.951544, "process_mem_max_rss": "150056960", "process_out_blocks": "0", "process_user_time": 4.104535}
+[0m22:56:59.467951 [debug] [MainThread]: Command `dbt run` failed at 22:56:59.467744 after 6.90 seconds
+[0m22:56:59.468816 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10711ddd0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10b889690>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10b888410>]}
+[0m22:56:59.469434 [debug] [MainThread]: Flushing usage events
+[0m22:57:01.164702 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m22:59:47.386098 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x114278c50>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1142ea610>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1142ead90>]}
+
+
+============================== 22:59:47.392993 | 0588f4ee-e50c-439c-b7d2-b1beb9d4aa3a ==============================
+[0m22:59:47.392993 [info ] [MainThread]: Running with dbt=1.10.4
+[0m22:59:47.393757 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'write_json': 'True', 'log_cache_events': 'False', 'partial_parse': 'True', 'cache_selected_only': 'False', 'profiles_dir': '/Users/tthuha236/.dbt', 'fail_fast': 'False', 'warn_error': 'None', 'log_path': '/Users/tthuha236/Documents/Learning_2025/sidepj/estat_dbt/logs', 'debug': 'False', 'version_check': 'True', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'quiet': 'False', 'empty': 'False', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'introspect': 'True', 'invocation_command': 'dbt run', 'log_format': 'default', 'target_path': 'None', 'static_parser': 'True', 'send_anonymous_usage_stats': 'True'}
+[0m22:59:48.221317 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '0588f4ee-e50c-439c-b7d2-b1beb9d4aa3a', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x111b3a290>]}
+[0m22:59:48.283728 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': '0588f4ee-e50c-439c-b7d2-b1beb9d4aa3a', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x114e47c50>]}
+[0m22:59:48.285227 [info ] [MainThread]: Registered adapter: snowflake=1.10.0
+[0m22:59:48.497508 [debug] [MainThread]: checksum: 073cb5a296270136b24f9c040fdebd0642ef9c263903ef463bfe7e190c538da2, vars: {}, profile: , target: , version: 1.10.4
+[0m22:59:48.677069 [debug] [MainThread]: Partial parsing enabled: 0 files deleted, 0 files added, 1 files changed.
+[0m22:59:48.677768 [debug] [MainThread]: Partial parsing: updated file: estat_dbt://models/transformed/fact_expense.sql
+[0m22:59:48.911210 [warn ] [MainThread]: [[33mWARNING[0m]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.
+There are 1 unused configuration paths:
+- models.estat_dbt.example
+[0m22:59:48.917317 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': '0588f4ee-e50c-439c-b7d2-b1beb9d4aa3a', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1150b0190>]}
+[0m22:59:48.976712 [debug] [MainThread]: Wrote artifact WritableManifest to /Users/tthuha236/Documents/Learning_2025/sidepj/estat_dbt/target/manifest.json
+[0m22:59:48.980040 [debug] [MainThread]: Wrote artifact SemanticManifest to /Users/tthuha236/Documents/Learning_2025/sidepj/estat_dbt/target/semantic_manifest.json
+[0m22:59:49.014833 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': '0588f4ee-e50c-439c-b7d2-b1beb9d4aa3a', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x115550750>]}
+[0m22:59:49.015573 [info ] [MainThread]: Found 1 model, 477 macros
+[0m22:59:49.016073 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '0588f4ee-e50c-439c-b7d2-b1beb9d4aa3a', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1154da2d0>]}
+[0m22:59:49.017939 [info ] [MainThread]: 
+[0m22:59:49.018502 [info ] [MainThread]: Concurrency: 3 threads (target='dev')
+[0m22:59:49.018942 [info ] [MainThread]: 
+[0m22:59:49.019741 [debug] [MainThread]: Acquiring new snowflake connection 'master'
+[0m22:59:49.020857 [debug] [ThreadPool]: Acquiring new snowflake connection 'list_estat_db'
+[0m22:59:49.091313 [debug] [ThreadPool]: Using snowflake connection "list_estat_db"
+[0m22:59:49.091928 [debug] [ThreadPool]: On list_estat_db: show terse schemas in database estat_db
+    limit 10000
+/* {"app": "dbt", "dbt_version": "1.10.4", "profile_name": "estat_dbt", "target_name": "dev", "connection_name": "list_estat_db"} */
+[0m22:59:49.092294 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m22:59:51.227808 [debug] [ThreadPool]: SQL status: SUCCESS 5 in 2.135 seconds
+[0m22:59:51.232195 [debug] [ThreadPool]: Re-using an available connection from the pool (formerly list_estat_db, now list_estat_db_estat_stg)
+[0m22:59:51.248649 [debug] [ThreadPool]: Using snowflake connection "list_estat_db_estat_stg"
+[0m22:59:51.249118 [debug] [ThreadPool]: On list_estat_db_estat_stg: show objects in estat_db.estat_stg
+    limit 10000
+    
+
+/* {"app": "dbt", "dbt_version": "1.10.4", "profile_name": "estat_dbt", "target_name": "dev", "connection_name": "list_estat_db_estat_stg"} */;
+[0m22:59:51.401423 [debug] [ThreadPool]: SQL status: SUCCESS 2 in 0.152 seconds
+[0m22:59:51.407669 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '0588f4ee-e50c-439c-b7d2-b1beb9d4aa3a', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x114e94dd0>]}
+[0m22:59:51.414785 [debug] [Thread-1 (]: Began running node model.estat_dbt.fact_expense
+[0m22:59:51.415841 [info ] [Thread-1 (]: 1 of 1 START sql view model estat_stg.fact_expense ............................. [RUN]
+[0m22:59:51.416756 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly list_estat_db_estat_stg, now model.estat_dbt.fact_expense)
+[0m22:59:51.417561 [debug] [Thread-1 (]: Began compiling node model.estat_dbt.fact_expense
+[0m22:59:51.429459 [debug] [Thread-1 (]: Writing injected SQL for node "model.estat_dbt.fact_expense"
+[0m22:59:51.431473 [debug] [Thread-1 (]: Began executing node model.estat_dbt.fact_expense
+[0m22:59:51.464822 [debug] [Thread-1 (]: Writing runtime sql for node "model.estat_dbt.fact_expense"
+[0m22:59:51.466845 [debug] [Thread-1 (]: Using snowflake connection "model.estat_dbt.fact_expense"
+[0m22:59:51.467299 [debug] [Thread-1 (]: On model.estat_dbt.fact_expense: create or replace   view estat_db.estat_stg.fact_expense
+  
+  
+  
+  
+  as (
+    WITH fact_expense_stg AS (
+    SELECT * FROM ESTAT_DB.ESTAT_STG.fact_expense_stg
+)
+SELECT 
+    CATEGORY_CD,
+    AMOUNT, 
+    AREA_CD, 
+    YEAR,
+    MONTH,
+    CURRENT_TIMESTAMP(),
+    CURRENT_TIMESTAMP()
+FROM fact_expense_stg
+  )
+/* {"app": "dbt", "dbt_version": "1.10.4", "profile_name": "estat_dbt", "target_name": "dev", "node_id": "model.estat_dbt.fact_expense"} */;
+[0m22:59:51.568250 [debug] [Thread-1 (]: Snowflake adapter: Snowflake query id: 01bdc007-0002-9dbc-0002-73ea000a61f2
+[0m22:59:51.569196 [debug] [Thread-1 (]: Snowflake adapter: Snowflake error: 003001 (42501): SQL access control error:
+Insufficient privileges to operate on schema 'ESTAT_STG'
+[0m22:59:51.576709 [debug] [Thread-1 (]: Database Error in model fact_expense (models/transformed/fact_expense.sql)
+  003001 (42501): SQL access control error:
+  Insufficient privileges to operate on schema 'ESTAT_STG'
+  compiled code at target/run/estat_dbt/models/transformed/fact_expense.sql
+[0m22:59:51.579715 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '0588f4ee-e50c-439c-b7d2-b1beb9d4aa3a', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x115234690>]}
+[0m22:59:51.580803 [error] [Thread-1 (]: 1 of 1 ERROR creating sql view model estat_stg.fact_expense .................... [[31mERROR[0m in 0.16s]
+[0m22:59:51.581749 [debug] [Thread-1 (]: Finished running node model.estat_dbt.fact_expense
+[0m22:59:51.582697 [debug] [Thread-6 (]: Marking all children of 'model.estat_dbt.fact_expense' to be skipped because of status 'error'.  Reason: Database Error in model fact_expense (models/transformed/fact_expense.sql)
+  003001 (42501): SQL access control error:
+  Insufficient privileges to operate on schema 'ESTAT_STG'
+  compiled code at target/run/estat_dbt/models/transformed/fact_expense.sql.
+[0m22:59:51.585499 [debug] [MainThread]: Connection 'master' was properly closed.
+[0m22:59:51.586070 [debug] [MainThread]: Connection 'model.estat_dbt.fact_expense' was left open.
+[0m22:59:51.586512 [debug] [MainThread]: On model.estat_dbt.fact_expense: Close
+[0m22:59:51.670309 [info ] [MainThread]: 
+[0m22:59:51.671228 [info ] [MainThread]: Finished running 1 view model in 0 hours 0 minutes and 2.65 seconds (2.65s).
+[0m22:59:51.673156 [debug] [MainThread]: Command end result
+[0m22:59:51.704141 [debug] [MainThread]: Wrote artifact WritableManifest to /Users/tthuha236/Documents/Learning_2025/sidepj/estat_dbt/target/manifest.json
+[0m22:59:51.706229 [debug] [MainThread]: Wrote artifact SemanticManifest to /Users/tthuha236/Documents/Learning_2025/sidepj/estat_dbt/target/semantic_manifest.json
+[0m22:59:51.712992 [debug] [MainThread]: Wrote artifact RunExecutionResult to /Users/tthuha236/Documents/Learning_2025/sidepj/estat_dbt/target/run_results.json
+[0m22:59:51.713365 [info ] [MainThread]: 
+[0m22:59:51.713800 [info ] [MainThread]: [31mCompleted with 1 error, 0 partial successes, and 0 warnings:[0m
+[0m22:59:51.714309 [info ] [MainThread]: 
+[0m22:59:51.715004 [error] [MainThread]: [31mFailure in model fact_expense (models/transformed/fact_expense.sql)[0m
+[0m22:59:51.715503 [error] [MainThread]:   Database Error in model fact_expense (models/transformed/fact_expense.sql)
+  003001 (42501): SQL access control error:
+  Insufficient privileges to operate on schema 'ESTAT_STG'
+  compiled code at target/run/estat_dbt/models/transformed/fact_expense.sql
+[0m22:59:51.715962 [info ] [MainThread]: 
+[0m22:59:51.716386 [info ] [MainThread]:   compiled code at target/compiled/estat_dbt/models/transformed/fact_expense.sql
+[0m22:59:51.716830 [info ] [MainThread]: 
+[0m22:59:51.717232 [info ] [MainThread]: Done. PASS=0 WARN=0 ERROR=1 SKIP=0 NO-OP=0 TOTAL=1
+[0m22:59:51.718967 [debug] [MainThread]: Resource report: {"command_name": "run", "command_success": false, "command_wall_clock_time": 4.4228053, "process_in_blocks": "0", "process_kernel_time": 0.74121, "process_mem_max_rss": "149192704", "process_out_blocks": "0", "process_user_time": 2.852527}
+[0m22:59:51.719726 [debug] [MainThread]: Command `dbt run` failed at 22:59:51.719515 after 4.42 seconds
+[0m22:59:51.720451 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10fbc9cd0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x11430b550>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x11430b9d0>]}
+[0m22:59:51.720918 [debug] [MainThread]: Flushing usage events
+[0m22:59:53.847093 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m23:10:42.738081 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x113c8c7d0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x113cfe5d0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x113cfe9d0>]}
+
+
+============================== 23:10:42.746654 | 050ee1e4-5730-46cb-9709-eb7949dca5f6 ==============================
+[0m23:10:42.746654 [info ] [MainThread]: Running with dbt=1.10.4
+[0m23:10:42.747619 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'log_cache_events': 'False', 'write_json': 'True', 'partial_parse': 'True', 'cache_selected_only': 'False', 'warn_error': 'None', 'fail_fast': 'False', 'version_check': 'True', 'log_path': '/Users/tthuha236/Documents/Learning_2025/sidepj/estat_dbt/logs', 'profiles_dir': '/Users/tthuha236/.dbt', 'debug': 'False', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'quiet': 'False', 'empty': 'False', 'log_format': 'default', 'introspect': 'True', 'static_parser': 'True', 'invocation_command': 'dbt run', 'target_path': 'None', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'send_anonymous_usage_stats': 'True'}
+[0m23:10:43.587772 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '050ee1e4-5730-46cb-9709-eb7949dca5f6', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1149f4050>]}
+[0m23:10:43.664135 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': '050ee1e4-5730-46cb-9709-eb7949dca5f6', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x11490bf50>]}
+[0m23:10:43.666031 [info ] [MainThread]: Registered adapter: snowflake=1.10.0
+[0m23:10:43.911987 [debug] [MainThread]: checksum: 073cb5a296270136b24f9c040fdebd0642ef9c263903ef463bfe7e190c538da2, vars: {}, profile: , target: , version: 1.10.4
+[0m23:10:43.987202 [info ] [MainThread]: Unable to do partial parsing because a project config has changed
+[0m23:10:43.987874 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'partial_parser', 'label': '050ee1e4-5730-46cb-9709-eb7949dca5f6', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1135f2790>]}
+[0m23:10:45.203170 [warn ] [MainThread]: [[33mWARNING[0m]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.
+There are 1 unused configuration paths:
+- models.estat_dbt.mart
+[0m23:10:45.209516 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': '050ee1e4-5730-46cb-9709-eb7949dca5f6', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x114d65810>]}
+[0m23:10:45.277067 [debug] [MainThread]: Wrote artifact WritableManifest to /Users/tthuha236/Documents/Learning_2025/sidepj/estat_dbt/target/manifest.json
+[0m23:10:45.282831 [debug] [MainThread]: Wrote artifact SemanticManifest to /Users/tthuha236/Documents/Learning_2025/sidepj/estat_dbt/target/semantic_manifest.json
+[0m23:10:45.323492 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': '050ee1e4-5730-46cb-9709-eb7949dca5f6', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x114ce15d0>]}
+[0m23:10:45.324161 [info ] [MainThread]: Found 1 model, 477 macros
+[0m23:10:45.324714 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '050ee1e4-5730-46cb-9709-eb7949dca5f6', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x114df76d0>]}
+[0m23:10:45.326829 [info ] [MainThread]: 
+[0m23:10:45.327663 [info ] [MainThread]: Concurrency: 3 threads (target='dev')
+[0m23:10:45.328200 [info ] [MainThread]: 
+[0m23:10:45.329130 [debug] [MainThread]: Acquiring new snowflake connection 'master'
+[0m23:10:45.330685 [debug] [ThreadPool]: Acquiring new snowflake connection 'list_estat_db'
+[0m23:10:45.403821 [debug] [ThreadPool]: Using snowflake connection "list_estat_db"
+[0m23:10:45.404243 [debug] [ThreadPool]: On list_estat_db: show terse schemas in database estat_db
+    limit 10000
+/* {"app": "dbt", "dbt_version": "1.10.4", "profile_name": "estat_dbt", "target_name": "dev", "connection_name": "list_estat_db"} */
+[0m23:10:45.404549 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m23:10:46.808400 [debug] [ThreadPool]: SQL status: SUCCESS 5 in 1.403 seconds
+[0m23:10:46.816154 [debug] [ThreadPool]: Re-using an available connection from the pool (formerly list_estat_db, now list_estat_db_estat_stg)
+[0m23:10:46.837275 [debug] [ThreadPool]: Using snowflake connection "list_estat_db_estat_stg"
+[0m23:10:46.837852 [debug] [ThreadPool]: On list_estat_db_estat_stg: show objects in estat_db.estat_stg
+    limit 10000
+    
+
+/* {"app": "dbt", "dbt_version": "1.10.4", "profile_name": "estat_dbt", "target_name": "dev", "connection_name": "list_estat_db_estat_stg"} */;
+[0m23:10:46.971242 [debug] [ThreadPool]: SQL status: SUCCESS 2 in 0.133 seconds
+[0m23:10:46.976985 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '050ee1e4-5730-46cb-9709-eb7949dca5f6', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x114df4b10>]}
+[0m23:10:46.984000 [debug] [Thread-1 (]: Began running node model.estat_dbt.fact_expense
+[0m23:10:46.985082 [info ] [Thread-1 (]: 1 of 1 START sql table model estat_stg.fact_expense ............................ [RUN]
+[0m23:10:46.985967 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly list_estat_db_estat_stg, now model.estat_dbt.fact_expense)
+[0m23:10:46.986901 [debug] [Thread-1 (]: Began compiling node model.estat_dbt.fact_expense
+[0m23:10:46.998148 [debug] [Thread-1 (]: Writing injected SQL for node "model.estat_dbt.fact_expense"
+[0m23:10:46.999353 [debug] [Thread-1 (]: Began executing node model.estat_dbt.fact_expense
+[0m23:10:47.042320 [debug] [Thread-1 (]: Writing runtime sql for node "model.estat_dbt.fact_expense"
+[0m23:10:47.045250 [debug] [Thread-1 (]: Using snowflake connection "model.estat_dbt.fact_expense"
+[0m23:10:47.046012 [debug] [Thread-1 (]: On model.estat_dbt.fact_expense: create or replace transient table estat_db.estat_stg.fact_expense
+    
+    
+    
+    as (WITH fact_expense_stg AS (
+    SELECT * FROM ESTAT_DB.ESTAT_STG.fact_expense_stg
+)
+SELECT 
+    CATEGORY_CD,
+    AMOUNT, 
+    AREA_CD, 
+    YEAR,
+    MONTH,
+    CURRENT_TIMESTAMP(),
+    CURRENT_TIMESTAMP()
+FROM fact_expense_stg
+    )
+
+/* {"app": "dbt", "dbt_version": "1.10.4", "profile_name": "estat_dbt", "target_name": "dev", "node_id": "model.estat_dbt.fact_expense"} */;
+[0m23:10:47.283035 [debug] [Thread-1 (]: Snowflake adapter: Snowflake query id: 01bdc012-0002-9d3d-0002-73ea000a128e
+[0m23:10:47.283929 [debug] [Thread-1 (]: Snowflake adapter: Snowflake error: 002022 (42601): SQL compilation error:
+Missing column specification
+[0m23:10:47.290556 [debug] [Thread-1 (]: Database Error in model fact_expense (models/transformed/fact_expense.sql)
+  002022 (42601): SQL compilation error:
+  Missing column specification
+  compiled code at target/run/estat_dbt/models/transformed/fact_expense.sql
+[0m23:10:47.293226 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '050ee1e4-5730-46cb-9709-eb7949dca5f6', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x114ffd810>]}
+[0m23:10:47.294248 [error] [Thread-1 (]: 1 of 1 ERROR creating sql table model estat_stg.fact_expense ................... [[31mERROR[0m in 0.31s]
+[0m23:10:47.295429 [debug] [Thread-1 (]: Finished running node model.estat_dbt.fact_expense
+[0m23:10:47.296549 [debug] [Thread-6 (]: Marking all children of 'model.estat_dbt.fact_expense' to be skipped because of status 'error'.  Reason: Database Error in model fact_expense (models/transformed/fact_expense.sql)
+  002022 (42601): SQL compilation error:
+  Missing column specification
+  compiled code at target/run/estat_dbt/models/transformed/fact_expense.sql.
+[0m23:10:47.299436 [debug] [MainThread]: Connection 'master' was properly closed.
+[0m23:10:47.299975 [debug] [MainThread]: Connection 'model.estat_dbt.fact_expense' was left open.
+[0m23:10:47.300388 [debug] [MainThread]: On model.estat_dbt.fact_expense: Close
+[0m23:10:47.437933 [info ] [MainThread]: 
+[0m23:10:47.439065 [info ] [MainThread]: Finished running 1 table model in 0 hours 0 minutes and 2.11 seconds (2.11s).
+[0m23:10:47.441006 [debug] [MainThread]: Command end result
+[0m23:10:47.476913 [debug] [MainThread]: Wrote artifact WritableManifest to /Users/tthuha236/Documents/Learning_2025/sidepj/estat_dbt/target/manifest.json
+[0m23:10:47.479511 [debug] [MainThread]: Wrote artifact SemanticManifest to /Users/tthuha236/Documents/Learning_2025/sidepj/estat_dbt/target/semantic_manifest.json
+[0m23:10:47.487833 [debug] [MainThread]: Wrote artifact RunExecutionResult to /Users/tthuha236/Documents/Learning_2025/sidepj/estat_dbt/target/run_results.json
+[0m23:10:47.488576 [info ] [MainThread]: 
+[0m23:10:47.489028 [info ] [MainThread]: [31mCompleted with 1 error, 0 partial successes, and 0 warnings:[0m
+[0m23:10:47.489406 [info ] [MainThread]: 
+[0m23:10:47.490175 [error] [MainThread]: [31mFailure in model fact_expense (models/transformed/fact_expense.sql)[0m
+[0m23:10:47.490971 [error] [MainThread]:   Database Error in model fact_expense (models/transformed/fact_expense.sql)
+  002022 (42601): SQL compilation error:
+  Missing column specification
+  compiled code at target/run/estat_dbt/models/transformed/fact_expense.sql
+[0m23:10:47.491438 [info ] [MainThread]: 
+[0m23:10:47.491870 [info ] [MainThread]:   compiled code at target/compiled/estat_dbt/models/transformed/fact_expense.sql
+[0m23:10:47.492287 [info ] [MainThread]: 
+[0m23:10:47.492706 [info ] [MainThread]: Done. PASS=0 WARN=0 ERROR=1 SKIP=0 NO-OP=0 TOTAL=1
+[0m23:10:47.494472 [debug] [MainThread]: Resource report: {"command_name": "run", "command_success": false, "command_wall_clock_time": 4.848146, "process_in_blocks": "0", "process_kernel_time": 0.823658, "process_mem_max_rss": "147382272", "process_out_blocks": "0", "process_user_time": 4.126249}
+[0m23:10:47.495185 [debug] [MainThread]: Command `dbt run` failed at 23:10:47.494973 after 4.85 seconds
+[0m23:10:47.495712 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10f579dd0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10f4d2b10>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x116117690>]}
+[0m23:10:47.496114 [debug] [MainThread]: Flushing usage events
+[0m23:10:49.212712 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m23:14:09.068226 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10f8a8390>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10f91a850>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10f91acd0>]}
+
+
+============================== 23:14:09.076928 | 3c6595e6-fac2-411a-aca6-e3e26e83d5fb ==============================
+[0m23:14:09.076928 [info ] [MainThread]: Running with dbt=1.10.4
+[0m23:14:09.078261 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'write_json': 'True', 'log_cache_events': 'False', 'partial_parse': 'True', 'cache_selected_only': 'False', 'profiles_dir': '/Users/tthuha236/.dbt', 'version_check': 'True', 'fail_fast': 'False', 'log_path': '/Users/tthuha236/Documents/Learning_2025/sidepj/estat_dbt/logs', 'warn_error': 'None', 'debug': 'False', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'quiet': 'False', 'empty': 'False', 'log_format': 'default', 'static_parser': 'True', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'introspect': 'True', 'target_path': 'None', 'invocation_command': 'dbt run', 'send_anonymous_usage_stats': 'True'}
+[0m23:14:09.859535 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '3c6595e6-fac2-411a-aca6-e3e26e83d5fb', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1104735d0>]}
+[0m23:14:09.932857 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': '3c6595e6-fac2-411a-aca6-e3e26e83d5fb', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x110527d10>]}
+[0m23:14:09.934677 [info ] [MainThread]: Registered adapter: snowflake=1.10.0
+[0m23:14:10.165355 [debug] [MainThread]: checksum: 073cb5a296270136b24f9c040fdebd0642ef9c263903ef463bfe7e190c538da2, vars: {}, profile: , target: , version: 1.10.4
+[0m23:14:10.322817 [debug] [MainThread]: Partial parsing enabled: 0 files deleted, 0 files added, 0 files changed.
+[0m23:14:10.323358 [debug] [MainThread]: Partial parsing enabled, no changes found, skipping parsing
+[0m23:14:10.329434 [warn ] [MainThread]: [[33mWARNING[0m]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.
+There are 1 unused configuration paths:
+- models.estat_dbt.mart
+[0m23:14:10.356423 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': '3c6595e6-fac2-411a-aca6-e3e26e83d5fb', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x11095cbd0>]}
+[0m23:14:10.424002 [debug] [MainThread]: Wrote artifact WritableManifest to /Users/tthuha236/Documents/Learning_2025/sidepj/estat_dbt/target/manifest.json
+[0m23:14:10.430039 [debug] [MainThread]: Wrote artifact SemanticManifest to /Users/tthuha236/Documents/Learning_2025/sidepj/estat_dbt/target/semantic_manifest.json
+[0m23:14:10.466586 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': '3c6595e6-fac2-411a-aca6-e3e26e83d5fb', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x110869710>]}
+[0m23:14:10.467212 [info ] [MainThread]: Found 1 model, 477 macros
+[0m23:14:10.467607 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '3c6595e6-fac2-411a-aca6-e3e26e83d5fb', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1105b66d0>]}
+[0m23:14:10.469494 [info ] [MainThread]: 
+[0m23:14:10.470058 [info ] [MainThread]: Concurrency: 3 threads (target='dev')
+[0m23:14:10.470890 [info ] [MainThread]: 
+[0m23:14:10.472089 [debug] [MainThread]: Acquiring new snowflake connection 'master'
+[0m23:14:10.473339 [debug] [ThreadPool]: Acquiring new snowflake connection 'list_estat_db'
+[0m23:14:10.546457 [debug] [ThreadPool]: Using snowflake connection "list_estat_db"
+[0m23:14:10.547344 [debug] [ThreadPool]: On list_estat_db: show terse schemas in database estat_db
+    limit 10000
+/* {"app": "dbt", "dbt_version": "1.10.4", "profile_name": "estat_dbt", "target_name": "dev", "connection_name": "list_estat_db"} */
+[0m23:14:10.547707 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m23:14:12.330008 [debug] [ThreadPool]: SQL status: SUCCESS 5 in 1.782 seconds
+[0m23:14:12.336582 [debug] [ThreadPool]: Re-using an available connection from the pool (formerly list_estat_db, now list_estat_db_estat_stg)
+[0m23:14:12.358925 [debug] [ThreadPool]: Using snowflake connection "list_estat_db_estat_stg"
+[0m23:14:12.359561 [debug] [ThreadPool]: On list_estat_db_estat_stg: show objects in estat_db.estat_stg
+    limit 10000
+    
+
+/* {"app": "dbt", "dbt_version": "1.10.4", "profile_name": "estat_dbt", "target_name": "dev", "connection_name": "list_estat_db_estat_stg"} */;
+[0m23:14:12.489659 [debug] [ThreadPool]: SQL status: SUCCESS 2 in 0.130 seconds
+[0m23:14:12.495660 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '3c6595e6-fac2-411a-aca6-e3e26e83d5fb', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1109adb90>]}
+[0m23:14:12.502359 [debug] [Thread-1 (]: Began running node model.estat_dbt.fact_expense
+[0m23:14:12.503529 [info ] [Thread-1 (]: 1 of 1 START sql table model estat_stg.fact_expense ............................ [RUN]
+[0m23:14:12.504595 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly list_estat_db_estat_stg, now model.estat_dbt.fact_expense)
+[0m23:14:12.505456 [debug] [Thread-1 (]: Began compiling node model.estat_dbt.fact_expense
+[0m23:14:12.516927 [debug] [Thread-1 (]: Writing injected SQL for node "model.estat_dbt.fact_expense"
+[0m23:14:12.518184 [debug] [Thread-1 (]: Began executing node model.estat_dbt.fact_expense
+[0m23:14:12.557238 [debug] [Thread-1 (]: Writing runtime sql for node "model.estat_dbt.fact_expense"
+[0m23:14:12.559392 [debug] [Thread-1 (]: Using snowflake connection "model.estat_dbt.fact_expense"
+[0m23:14:12.559909 [debug] [Thread-1 (]: On model.estat_dbt.fact_expense: create or replace transient table estat_db.estat_stg.fact_expense
+    
+    
+    
+    as (WITH fact_expense_stg AS (
+    SELECT * FROM ESTAT_DB.ESTAT_STG.fact_expense_stg
+)
+SELECT 
+    CATEGORY_CD,
+    AMOUNT, 
+    AREA_CD, 
+    YEAR,
+    MONTH,
+    CURRENT_TIMESTAMP(),
+    CURRENT_TIMESTAMP()
+FROM fact_expense_stg
+    )
+
+/* {"app": "dbt", "dbt_version": "1.10.4", "profile_name": "estat_dbt", "target_name": "dev", "node_id": "model.estat_dbt.fact_expense"} */;
+[0m23:14:12.787375 [debug] [Thread-1 (]: Snowflake adapter: Snowflake query id: 01bdc016-0002-9dbc-0002-73ea000a62b6
+[0m23:14:12.787952 [debug] [Thread-1 (]: Snowflake adapter: Snowflake error: 002022 (42601): SQL compilation error:
+Missing column specification
+[0m23:14:12.793276 [debug] [Thread-1 (]: Database Error in model fact_expense (models/transformed/fact_expense.sql)
+  002022 (42601): SQL compilation error:
+  Missing column specification
+  compiled code at target/run/estat_dbt/models/transformed/fact_expense.sql
+[0m23:14:12.795865 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '3c6595e6-fac2-411a-aca6-e3e26e83d5fb', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x110a42390>]}
+[0m23:14:12.796954 [error] [Thread-1 (]: 1 of 1 ERROR creating sql table model estat_stg.fact_expense ................... [[31mERROR[0m in 0.29s]
+[0m23:14:12.798127 [debug] [Thread-1 (]: Finished running node model.estat_dbt.fact_expense
+[0m23:14:12.798895 [debug] [Thread-6 (]: Marking all children of 'model.estat_dbt.fact_expense' to be skipped because of status 'error'.  Reason: Database Error in model fact_expense (models/transformed/fact_expense.sql)
+  002022 (42601): SQL compilation error:
+  Missing column specification
+  compiled code at target/run/estat_dbt/models/transformed/fact_expense.sql.
+[0m23:14:12.801154 [debug] [MainThread]: Connection 'master' was properly closed.
+[0m23:14:12.801617 [debug] [MainThread]: Connection 'model.estat_dbt.fact_expense' was left open.
+[0m23:14:12.802019 [debug] [MainThread]: On model.estat_dbt.fact_expense: Close
+[0m23:14:12.859426 [info ] [MainThread]: 
+[0m23:14:12.860124 [info ] [MainThread]: Finished running 1 table model in 0 hours 0 minutes and 2.39 seconds (2.39s).
+[0m23:14:12.861472 [debug] [MainThread]: Command end result
+[0m23:14:12.888727 [debug] [MainThread]: Wrote artifact WritableManifest to /Users/tthuha236/Documents/Learning_2025/sidepj/estat_dbt/target/manifest.json
+[0m23:14:12.890459 [debug] [MainThread]: Wrote artifact SemanticManifest to /Users/tthuha236/Documents/Learning_2025/sidepj/estat_dbt/target/semantic_manifest.json
+[0m23:14:12.896984 [debug] [MainThread]: Wrote artifact RunExecutionResult to /Users/tthuha236/Documents/Learning_2025/sidepj/estat_dbt/target/run_results.json
+[0m23:14:12.897517 [info ] [MainThread]: 
+[0m23:14:12.898236 [info ] [MainThread]: [31mCompleted with 1 error, 0 partial successes, and 0 warnings:[0m
+[0m23:14:12.898956 [info ] [MainThread]: 
+[0m23:14:12.899757 [error] [MainThread]: [31mFailure in model fact_expense (models/transformed/fact_expense.sql)[0m
+[0m23:14:12.900746 [error] [MainThread]:   Database Error in model fact_expense (models/transformed/fact_expense.sql)
+  002022 (42601): SQL compilation error:
+  Missing column specification
+  compiled code at target/run/estat_dbt/models/transformed/fact_expense.sql
+[0m23:14:12.901461 [info ] [MainThread]: 
+[0m23:14:12.902391 [info ] [MainThread]:   compiled code at target/compiled/estat_dbt/models/transformed/fact_expense.sql
+[0m23:14:12.902928 [info ] [MainThread]: 
+[0m23:14:12.903683 [info ] [MainThread]: Done. PASS=0 WARN=0 ERROR=1 SKIP=0 NO-OP=0 TOTAL=1
+[0m23:14:12.905509 [debug] [MainThread]: Resource report: {"command_name": "run", "command_success": false, "command_wall_clock_time": 3.9261906, "process_in_blocks": "0", "process_kernel_time": 0.762775, "process_mem_max_rss": "145080320", "process_out_blocks": "0", "process_user_time": 2.835733}
+[0m23:14:12.906183 [debug] [MainThread]: Command `dbt run` failed at 23:14:12.906031 after 3.93 seconds
+[0m23:14:12.906785 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10b199d10>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10b0f2950>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10f898210>]}
+[0m23:14:12.907520 [debug] [MainThread]: Flushing usage events
+[0m23:14:15.055452 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m23:18:03.657760 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10ce34750>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10ce36110>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10cea6ad0>]}
+
+
+============================== 23:18:03.664944 | 6ad7a6d0-3fc1-480d-bd6d-eb47133ba551 ==============================
+[0m23:18:03.664944 [info ] [MainThread]: Running with dbt=1.10.4
+[0m23:18:03.665741 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'log_cache_events': 'False', 'write_json': 'True', 'partial_parse': 'True', 'cache_selected_only': 'False', 'profiles_dir': '/Users/tthuha236/.dbt', 'fail_fast': 'False', 'warn_error': 'None', 'log_path': '/Users/tthuha236/Documents/Learning_2025/sidepj/estat_dbt/logs', 'version_check': 'True', 'debug': 'False', 'use_colors': 'True', 'use_experimental_parser': 'False', 'empty': 'False', 'quiet': 'False', 'no_print': 'None', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'static_parser': 'True', 'introspect': 'True', 'invocation_command': 'dbt run', 'target_path': 'None', 'log_format': 'default', 'send_anonymous_usage_stats': 'True'}
+[0m23:18:04.392236 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '6ad7a6d0-3fc1-480d-bd6d-eb47133ba551', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10ce6cbd0>]}
+[0m23:18:04.459684 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': '6ad7a6d0-3fc1-480d-bd6d-eb47133ba551', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10dab3f50>]}
+[0m23:18:04.461666 [info ] [MainThread]: Registered adapter: snowflake=1.10.0
+[0m23:18:04.695489 [debug] [MainThread]: checksum: 073cb5a296270136b24f9c040fdebd0642ef9c263903ef463bfe7e190c538da2, vars: {}, profile: , target: , version: 1.10.4
+[0m23:18:04.846538 [debug] [MainThread]: Partial parsing enabled: 0 files deleted, 0 files added, 1 files changed.
+[0m23:18:04.847239 [debug] [MainThread]: Partial parsing: updated file: estat_dbt://models/transformed/fact_expense.sql
+[0m23:18:05.092201 [warn ] [MainThread]: [[33mWARNING[0m]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.
+There are 1 unused configuration paths:
+- models.estat_dbt.mart
+[0m23:18:05.098304 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': '6ad7a6d0-3fc1-480d-bd6d-eb47133ba551', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10de28f50>]}
+[0m23:18:05.159574 [debug] [MainThread]: Wrote artifact WritableManifest to /Users/tthuha236/Documents/Learning_2025/sidepj/estat_dbt/target/manifest.json
+[0m23:18:05.162834 [debug] [MainThread]: Wrote artifact SemanticManifest to /Users/tthuha236/Documents/Learning_2025/sidepj/estat_dbt/target/semantic_manifest.json
+[0m23:18:05.194105 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': '6ad7a6d0-3fc1-480d-bd6d-eb47133ba551', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10e1b0650>]}
+[0m23:18:05.194657 [info ] [MainThread]: Found 1 model, 477 macros
+[0m23:18:05.195097 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '6ad7a6d0-3fc1-480d-bd6d-eb47133ba551', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10e00d250>]}
+[0m23:18:05.197167 [info ] [MainThread]: 
+[0m23:18:05.197707 [info ] [MainThread]: Concurrency: 3 threads (target='dev')
+[0m23:18:05.198114 [info ] [MainThread]: 
+[0m23:18:05.198855 [debug] [MainThread]: Acquiring new snowflake connection 'master'
+[0m23:18:05.200180 [debug] [ThreadPool]: Acquiring new snowflake connection 'list_estat_db'
+[0m23:18:05.268168 [debug] [ThreadPool]: Using snowflake connection "list_estat_db"
+[0m23:18:05.268613 [debug] [ThreadPool]: On list_estat_db: show terse schemas in database estat_db
+    limit 10000
+/* {"app": "dbt", "dbt_version": "1.10.4", "profile_name": "estat_dbt", "target_name": "dev", "connection_name": "list_estat_db"} */
+[0m23:18:05.268914 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m23:18:06.769239 [debug] [ThreadPool]: SQL status: SUCCESS 5 in 1.500 seconds
+[0m23:18:06.774320 [debug] [ThreadPool]: Re-using an available connection from the pool (formerly list_estat_db, now list_estat_db_estat_stg)
+[0m23:18:06.794348 [debug] [ThreadPool]: Using snowflake connection "list_estat_db_estat_stg"
+[0m23:18:06.795086 [debug] [ThreadPool]: On list_estat_db_estat_stg: show objects in estat_db.estat_stg
+    limit 10000
+    
+
+/* {"app": "dbt", "dbt_version": "1.10.4", "profile_name": "estat_dbt", "target_name": "dev", "connection_name": "list_estat_db_estat_stg"} */;
+[0m23:18:06.886552 [debug] [ThreadPool]: SQL status: SUCCESS 2 in 0.091 seconds
+[0m23:18:06.892024 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '6ad7a6d0-3fc1-480d-bd6d-eb47133ba551', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10e08e950>]}
+[0m23:18:06.899236 [debug] [Thread-1 (]: Began running node model.estat_dbt.fact_expense
+[0m23:18:06.900530 [info ] [Thread-1 (]: 1 of 1 START sql table model estat_stg.fact_expense ............................ [RUN]
+[0m23:18:06.901543 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly list_estat_db_estat_stg, now model.estat_dbt.fact_expense)
+[0m23:18:06.902461 [debug] [Thread-1 (]: Began compiling node model.estat_dbt.fact_expense
+[0m23:18:06.912424 [debug] [Thread-1 (]: Writing injected SQL for node "model.estat_dbt.fact_expense"
+[0m23:18:06.913924 [debug] [Thread-1 (]: Began executing node model.estat_dbt.fact_expense
+[0m23:18:06.947681 [debug] [Thread-1 (]: Writing runtime sql for node "model.estat_dbt.fact_expense"
+[0m23:18:06.949038 [debug] [Thread-1 (]: Using snowflake connection "model.estat_dbt.fact_expense"
+[0m23:18:06.949444 [debug] [Thread-1 (]: On model.estat_dbt.fact_expense: create or replace transient table estat_db.estat_stg.fact_expense
+    
+    
+    
+    as (WITH stg_table AS (
+    SELECT * FROM ESTAT_DB.ESTAT_STG.fact_expense_stg
+)
+SELECT 
+    CATEGORY_CD,
+    AMOUNT, 
+    AREA_CD, 
+    YEAR,
+    MONTH,
+    CURRENT_TIMESTAMP(),
+    CURRENT_TIMESTAMP()
+FROM stg_table
+    )
+
+/* {"app": "dbt", "dbt_version": "1.10.4", "profile_name": "estat_dbt", "target_name": "dev", "node_id": "model.estat_dbt.fact_expense"} */;
+[0m23:18:07.282512 [debug] [Thread-1 (]: Snowflake adapter: Snowflake query id: 01bdc01a-0002-9d38-0002-73ea000943ea
+[0m23:18:07.283384 [debug] [Thread-1 (]: Snowflake adapter: Snowflake error: 002022 (42601): SQL compilation error:
+Missing column specification
+[0m23:18:07.291042 [debug] [Thread-1 (]: Database Error in model fact_expense (models/transformed/fact_expense.sql)
+  002022 (42601): SQL compilation error:
+  Missing column specification
+  compiled code at target/run/estat_dbt/models/transformed/fact_expense.sql
+[0m23:18:07.294511 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '6ad7a6d0-3fc1-480d-bd6d-eb47133ba551', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10e04ae50>]}
+[0m23:18:07.295792 [error] [Thread-1 (]: 1 of 1 ERROR creating sql table model estat_stg.fact_expense ................... [[31mERROR[0m in 0.39s]
+[0m23:18:07.296948 [debug] [Thread-1 (]: Finished running node model.estat_dbt.fact_expense
+[0m23:18:07.297853 [debug] [Thread-6 (]: Marking all children of 'model.estat_dbt.fact_expense' to be skipped because of status 'error'.  Reason: Database Error in model fact_expense (models/transformed/fact_expense.sql)
+  002022 (42601): SQL compilation error:
+  Missing column specification
+  compiled code at target/run/estat_dbt/models/transformed/fact_expense.sql.
+[0m23:18:07.300706 [debug] [MainThread]: Connection 'master' was properly closed.
+[0m23:18:07.301299 [debug] [MainThread]: Connection 'model.estat_dbt.fact_expense' was left open.
+[0m23:18:07.301775 [debug] [MainThread]: On model.estat_dbt.fact_expense: Close
+[0m23:18:07.385099 [info ] [MainThread]: 
+[0m23:18:07.386241 [info ] [MainThread]: Finished running 1 table model in 0 hours 0 minutes and 2.19 seconds (2.19s).
+[0m23:18:07.388162 [debug] [MainThread]: Command end result
+[0m23:18:07.421532 [debug] [MainThread]: Wrote artifact WritableManifest to /Users/tthuha236/Documents/Learning_2025/sidepj/estat_dbt/target/manifest.json
+[0m23:18:07.424393 [debug] [MainThread]: Wrote artifact SemanticManifest to /Users/tthuha236/Documents/Learning_2025/sidepj/estat_dbt/target/semantic_manifest.json
+[0m23:18:07.431259 [debug] [MainThread]: Wrote artifact RunExecutionResult to /Users/tthuha236/Documents/Learning_2025/sidepj/estat_dbt/target/run_results.json
+[0m23:18:07.431781 [info ] [MainThread]: 
+[0m23:18:07.432263 [info ] [MainThread]: [31mCompleted with 1 error, 0 partial successes, and 0 warnings:[0m
+[0m23:18:07.432657 [info ] [MainThread]: 
+[0m23:18:07.433162 [error] [MainThread]: [31mFailure in model fact_expense (models/transformed/fact_expense.sql)[0m
+[0m23:18:07.433677 [error] [MainThread]:   Database Error in model fact_expense (models/transformed/fact_expense.sql)
+  002022 (42601): SQL compilation error:
+  Missing column specification
+  compiled code at target/run/estat_dbt/models/transformed/fact_expense.sql
+[0m23:18:07.434022 [info ] [MainThread]: 
+[0m23:18:07.434421 [info ] [MainThread]:   compiled code at target/compiled/estat_dbt/models/transformed/fact_expense.sql
+[0m23:18:07.434822 [info ] [MainThread]: 
+[0m23:18:07.435206 [info ] [MainThread]: Done. PASS=0 WARN=0 ERROR=1 SKIP=0 NO-OP=0 TOTAL=1
+[0m23:18:07.436922 [debug] [MainThread]: Resource report: {"command_name": "run", "command_success": false, "command_wall_clock_time": 3.8569684, "process_in_blocks": "0", "process_kernel_time": 0.721791, "process_mem_max_rss": "149581824", "process_out_blocks": "0", "process_user_time": 2.944444}
+[0m23:18:07.437570 [debug] [MainThread]: Command `dbt run` failed at 23:18:07.437453 after 3.86 seconds
+[0m23:18:07.438009 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10cec7250>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10cec7610>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10ce8e7d0>]}
+[0m23:18:07.438368 [debug] [MainThread]: Flushing usage events
+[0m23:18:09.223841 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m23:18:36.331640 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x105e78e90>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x105eeec10>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x105eef3d0>]}
+
+
+============================== 23:18:36.340588 | 0bdc461c-2604-4cbe-8b30-ef769dc076b4 ==============================
+[0m23:18:36.340588 [info ] [MainThread]: Running with dbt=1.10.4
+[0m23:18:36.341621 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'write_json': 'True', 'log_cache_events': 'False', 'partial_parse': 'True', 'cache_selected_only': 'False', 'warn_error': 'None', 'version_check': 'True', 'fail_fast': 'False', 'log_path': '/Users/tthuha236/Documents/Learning_2025/sidepj/estat_dbt/logs', 'debug': 'False', 'profiles_dir': '/Users/tthuha236/.dbt', 'use_colors': 'True', 'use_experimental_parser': 'False', 'empty': 'False', 'quiet': 'False', 'no_print': 'None', 'log_format': 'default', 'invocation_command': 'dbt run', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'introspect': 'True', 'target_path': 'None', 'static_parser': 'True', 'send_anonymous_usage_stats': 'True'}
+[0m23:18:37.134823 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '0bdc461c-2604-4cbe-8b30-ef769dc076b4', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x105d8f5d0>]}
+[0m23:18:37.204298 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': '0bdc461c-2604-4cbe-8b30-ef769dc076b4', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x106a84290>]}
+[0m23:18:37.206294 [info ] [MainThread]: Registered adapter: snowflake=1.10.0
+[0m23:18:37.412641 [debug] [MainThread]: checksum: 073cb5a296270136b24f9c040fdebd0642ef9c263903ef463bfe7e190c538da2, vars: {}, profile: , target: , version: 1.10.4
+[0m23:18:37.565649 [debug] [MainThread]: Partial parsing enabled: 0 files deleted, 0 files added, 1 files changed.
+[0m23:18:37.566430 [debug] [MainThread]: Partial parsing: updated file: estat_dbt://models/transformed/fact_expense.sql
+[0m23:18:37.810016 [warn ] [MainThread]: [[33mWARNING[0m]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.
+There are 1 unused configuration paths:
+- models.estat_dbt.mart
+[0m23:18:37.815916 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': '0bdc461c-2604-4cbe-8b30-ef769dc076b4', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x107053d50>]}
+[0m23:18:37.874995 [debug] [MainThread]: Wrote artifact WritableManifest to /Users/tthuha236/Documents/Learning_2025/sidepj/estat_dbt/target/manifest.json
+[0m23:18:37.879542 [debug] [MainThread]: Wrote artifact SemanticManifest to /Users/tthuha236/Documents/Learning_2025/sidepj/estat_dbt/target/semantic_manifest.json
+[0m23:18:37.916655 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': '0bdc461c-2604-4cbe-8b30-ef769dc076b4', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x106f80ad0>]}
+[0m23:18:37.917366 [info ] [MainThread]: Found 1 model, 477 macros
+[0m23:18:37.917791 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '0bdc461c-2604-4cbe-8b30-ef769dc076b4', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x107082a10>]}
+[0m23:18:37.920034 [info ] [MainThread]: 
+[0m23:18:37.920621 [info ] [MainThread]: Concurrency: 3 threads (target='dev')
+[0m23:18:37.921037 [info ] [MainThread]: 
+[0m23:18:37.921700 [debug] [MainThread]: Acquiring new snowflake connection 'master'
+[0m23:18:37.922764 [debug] [ThreadPool]: Acquiring new snowflake connection 'list_estat_db'
+[0m23:18:37.995954 [debug] [ThreadPool]: Using snowflake connection "list_estat_db"
+[0m23:18:37.996389 [debug] [ThreadPool]: On list_estat_db: show terse schemas in database estat_db
+    limit 10000
+/* {"app": "dbt", "dbt_version": "1.10.4", "profile_name": "estat_dbt", "target_name": "dev", "connection_name": "list_estat_db"} */
+[0m23:18:37.996695 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m23:18:39.111800 [debug] [ThreadPool]: SQL status: SUCCESS 5 in 1.115 seconds
+[0m23:18:39.118160 [debug] [ThreadPool]: Re-using an available connection from the pool (formerly list_estat_db, now list_estat_db_estat_stg)
+[0m23:18:39.140095 [debug] [ThreadPool]: Using snowflake connection "list_estat_db_estat_stg"
+[0m23:18:39.140690 [debug] [ThreadPool]: On list_estat_db_estat_stg: show objects in estat_db.estat_stg
+    limit 10000
+    
+
+/* {"app": "dbt", "dbt_version": "1.10.4", "profile_name": "estat_dbt", "target_name": "dev", "connection_name": "list_estat_db_estat_stg"} */;
+[0m23:18:39.252955 [debug] [ThreadPool]: SQL status: SUCCESS 2 in 0.111 seconds
+[0m23:18:39.259036 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '0bdc461c-2604-4cbe-8b30-ef769dc076b4', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x106cbca50>]}
+[0m23:18:39.268482 [debug] [Thread-1 (]: Began running node model.estat_dbt.fact_expense
+[0m23:18:39.270012 [info ] [Thread-1 (]: 1 of 1 START sql table model estat_stg.fact_expense ............................ [RUN]
+[0m23:18:39.271242 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly list_estat_db_estat_stg, now model.estat_dbt.fact_expense)
+[0m23:18:39.272275 [debug] [Thread-1 (]: Began compiling node model.estat_dbt.fact_expense
+[0m23:18:39.286027 [debug] [Thread-1 (]: Writing injected SQL for node "model.estat_dbt.fact_expense"
+[0m23:18:39.288025 [debug] [Thread-1 (]: Began executing node model.estat_dbt.fact_expense
+[0m23:18:39.327504 [debug] [Thread-1 (]: Writing runtime sql for node "model.estat_dbt.fact_expense"
+[0m23:18:39.328867 [debug] [Thread-1 (]: Using snowflake connection "model.estat_dbt.fact_expense"
+[0m23:18:39.329276 [debug] [Thread-1 (]: On model.estat_dbt.fact_expense: create or replace transient table estat_db.estat_stg.fact_expense
+    
+    
+    
+    as (WITH stg_table AS (
+    SELECT * FROM ESTAT_DB.ESTAT_STG.fact_expense_stg
+)
+SELECT 
+    CATEGORY_CD,
+    AMOUNT, 
+    AREA_CD, 
+    YEAR,
+    MONTH,
+    CURRENT_TIMESTAMP() as created_at,
+    CURRENT_TIMESTAMP() as updated_at
+FROM stg_table
+    )
+
+/* {"app": "dbt", "dbt_version": "1.10.4", "profile_name": "estat_dbt", "target_name": "dev", "node_id": "model.estat_dbt.fact_expense"} */;
+[0m23:18:40.542965 [debug] [Thread-1 (]: SQL status: SUCCESS 1 in 1.213 seconds
+[0m23:18:40.584708 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '0bdc461c-2604-4cbe-8b30-ef769dc076b4', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x108347f90>]}
+[0m23:18:40.585719 [info ] [Thread-1 (]: 1 of 1 OK created sql table model estat_stg.fact_expense ....................... [[32mSUCCESS 1[0m in 1.31s]
+[0m23:18:40.586447 [debug] [Thread-1 (]: Finished running node model.estat_dbt.fact_expense
+[0m23:18:40.588254 [debug] [MainThread]: Connection 'master' was properly closed.
+[0m23:18:40.588672 [debug] [MainThread]: Connection 'model.estat_dbt.fact_expense' was left open.
+[0m23:18:40.589047 [debug] [MainThread]: On model.estat_dbt.fact_expense: Close
+[0m23:18:40.726777 [info ] [MainThread]: 
+[0m23:18:40.727820 [info ] [MainThread]: Finished running 1 table model in 0 hours 0 minutes and 2.81 seconds (2.81s).
+[0m23:18:40.729380 [debug] [MainThread]: Command end result
+[0m23:18:40.765401 [debug] [MainThread]: Wrote artifact WritableManifest to /Users/tthuha236/Documents/Learning_2025/sidepj/estat_dbt/target/manifest.json
+[0m23:18:40.768870 [debug] [MainThread]: Wrote artifact SemanticManifest to /Users/tthuha236/Documents/Learning_2025/sidepj/estat_dbt/target/semantic_manifest.json
+[0m23:18:40.775571 [debug] [MainThread]: Wrote artifact RunExecutionResult to /Users/tthuha236/Documents/Learning_2025/sidepj/estat_dbt/target/run_results.json
+[0m23:18:40.776375 [info ] [MainThread]: 
+[0m23:18:40.776865 [info ] [MainThread]: [32mCompleted successfully[0m
+[0m23:18:40.777347 [info ] [MainThread]: 
+[0m23:18:40.777853 [info ] [MainThread]: Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+[0m23:18:40.779914 [debug] [MainThread]: Resource report: {"command_name": "run", "command_success": true, "command_wall_clock_time": 4.530005, "process_in_blocks": "0", "process_kernel_time": 0.743001, "process_mem_max_rss": "148357120", "process_out_blocks": "0", "process_user_time": 3.000775}
+[0m23:18:40.780562 [debug] [MainThread]: Command `dbt run` succeeded at 23:18:40.780427 after 4.53 seconds
+[0m23:18:40.781093 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1017b5e10>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x101659e50>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x105e68150>]}
+[0m23:18:40.781484 [debug] [MainThread]: Flushing usage events
+[0m23:18:41.589453 [debug] [MainThread]: An error was encountered while trying to flush usage events
