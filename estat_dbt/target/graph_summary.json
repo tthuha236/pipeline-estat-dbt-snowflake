@@ -1,1 +1,1 @@
-{"_invocation_id": "0bdc461c-2604-4cbe-8b30-ef769dc076b4", "linked": {"0": {"name": "model.estat_dbt.fact_expense", "type": "model"}}}
+{"_invocation_id": "205e76db-812f-40cf-a759-ff429631d1ee", "linked": {"0": {"name": "source.estat_dbt.stg.fact_expense_stg", "type": "source", "succ": [1]}, "1": {"name": "model.estat_dbt.fact_expense", "type": "model"}}}

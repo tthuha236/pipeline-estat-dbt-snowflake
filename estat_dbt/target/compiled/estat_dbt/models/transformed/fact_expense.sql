@@ -1,5 +1,7 @@
+
+
 WITH stg_table AS (
-    SELECT * FROM ESTAT_DB.ESTAT_STG.fact_expense_stg
+    SELECT * FROM estat_db.estat_stg.fact_expense_stg
 )
 SELECT 
     CATEGORY_CD,

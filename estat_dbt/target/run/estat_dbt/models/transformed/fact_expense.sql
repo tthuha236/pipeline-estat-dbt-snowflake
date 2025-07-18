@@ -2,12 +2,14 @@
   
     
 
-create or replace transient table estat_db.estat_stg.fact_expense
+create or replace transient table estat_db.estat_transformed.fact_expense
     
     
     
-    as (WITH stg_table AS (
-    SELECT * FROM ESTAT_DB.ESTAT_STG.fact_expense_stg
+    as (
+
+WITH stg_table AS (
+    SELECT * FROM estat_db.estat_stg.fact_expense_stg
 )
 SELECT 
     CATEGORY_CD,
