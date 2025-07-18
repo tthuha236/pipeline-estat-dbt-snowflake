@@ -1,5 +1,8 @@
 WITH stg_table AS (
-    SELECT * FROM {{ source('stg', 'fact_expense_stg')}}
+    SELECT * FROM {{ source('stg', 'fact_expense_stg')}} 
+    WHERE loaded_time = (
+        SELECT max(loaded_time) from {{ source('stg', 'fact_expense_stg')}} 
+    )
 )
 SELECT 
     s.category_cd,

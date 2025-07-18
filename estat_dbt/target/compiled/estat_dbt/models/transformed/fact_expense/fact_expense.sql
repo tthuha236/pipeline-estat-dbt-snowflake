@@ -1,5 +1,8 @@
 WITH stg_table AS (
-    SELECT * FROM estat_db.estat_stg.fact_expense_stg
+    SELECT * FROM estat_db.estat_stg.fact_expense_stg 
+    WHERE loaded_time = (
+        SELECT max(loaded_time) from estat_db.estat_stg.fact_expense_stg 
+    )
 )
 SELECT 
     s.category_cd,
