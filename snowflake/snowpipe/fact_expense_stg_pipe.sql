@@ -5,7 +5,7 @@ CREATE PIPE fact_expense_stg_pipe
   FROM
   (
     SELECT $1, $2, $3, $4, $5,
-               CURRENT_TIMESTAMP(),
+               METADATA$FILE_LAST_MODIFIED,
                CURRENT_USER(),
                METADATA$FILENAME
         FROM @s3_estat_stage/stg/expenses/
@@ -13,4 +13,3 @@ CREATE PIPE fact_expense_stg_pipe
     PATTERN = '[expense_].*[.]csv'
     FILE_FORMAT = (TYPE='CSV' SKIP_HEADER=1)
 ;
-
