@@ -6,10 +6,11 @@ models:
       unique_key: ['category_cd', 'area_cd', 'year', 'month']
     description: "Transformed table for fact expense"
 sources:
-  - name: stg
+  - name: fact_expense_stg
     description: "Staging table"
     database: estat_db
     schema: estat_stg
     tables:
-      - name: fact_expense_stg
+      - name: input_table
+        identifier: fact_expense_stg
         description: "Staging table for fact expense"

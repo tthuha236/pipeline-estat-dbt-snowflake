@@ -1,7 +1,7 @@
 WITH stg_table AS (
-    SELECT * FROM {{ source('stg', 'fact_expense_stg')}} 
+    SELECT * FROM {{ source('fact_expense_stg', 'input_table')}} 
     WHERE loaded_time = (
-        SELECT max(loaded_time) from {{ source('stg', 'fact_expense_stg')}} 
+        SELECT max(loaded_time) from {{ source('fact_expense_stg', 'input_table')}} 
     )
 )
 SELECT 
