@@ -1,0 +1,1 @@
+from airflow.providers.fab.auth_manager.fab_auth_manager import FabAuthManager
