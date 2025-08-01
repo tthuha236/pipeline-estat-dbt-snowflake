@@ -2,7 +2,6 @@ import json
 import requests
 import re
 import boto3
-import time
 from bs4 import BeautifulSoup
 from datetime import datetime
 import unicodedata
@@ -16,7 +15,7 @@ def get_downloaded_list(bucket, key):
         content = response['Body'].read().decode('utf-8')
         return content
     except Exception as e:
-        print(f"Error retrieving file: {e}")
+        print(f"Error retrieving downloaded list file: {e}")
 
 def get_new_filename(downloaded_list):
     try:
@@ -69,7 +68,7 @@ def download_excel_file(url, file_name, target_bucket, target_folder):
     # place excel file
     s3.put_object(
         Bucket=target_bucket,
-        Key=target_folder + "/"+ file_name + ".xlsx",
+        Key=target_folder + "/"+ file_name,
         Body=file_res.content
     )
 
@@ -81,16 +80,19 @@ def lambda_handler(event, context):
         return {"status": 400, "body": json.dumps("Cannot get the stat url and base url from event")}
 
     if not new_filename :
-        return {"status": 400, "body": json.dumps("Cannot get the file name")}
+        return {"status": 400, "body": json.dumps("Cannot get the new file name")}
 
     data_pth = find_target_data_page(event["stat_url"], new_filename)
     if not data_pth:
-        return {"status": 404, "body": json.dumps(f"Cannot find {new_filename} data page. Job ended")}
+        return {"status": 404, "body": json.dumps(f"Cannot find {new_filename.encode('utf-8').decode('unicode_escape')} data page. Job ended")}
     print(f"Found {new_filename} data page. Find link to download excel file...")
     try:
         excel_link = get_excel_link(event["base_url"],data_pth)
         if excel_link:
-            file_name = f"expense_{new_filename}_{datetime.now().strftime('%Y%m%d')}"
+            # target data year and month
+            year = new_filename.split("年")[0]
+            month = new_filename.split("年")[1].split("月")[0].zfill(2)
+            file_name = f"expense_{year}{month}_{datetime.now().strftime('%Y%m%d')}.xlsx"
             file_name = unicodedata.normalize("NFC", file_name)
             download_excel_file(excel_link, file_name, event["target_bucket"], event["target_folder"])
 
@@ -101,7 +103,11 @@ def lambda_handler(event, context):
                 Key=event["downloaded_list"],
                 Body=downloaded_list
             )
-            return {"status": 200, "body": json.dumps(f"{new_filename} data was successfully downloaded")}
+            return {"status": 200, 
+                    "output_file": file_name,
+                    "body": json.dumps(f"{new_filename} data was successfully downloaded"), 
+                    "function_name": context.function_name
+                    }
     except Exception as e:
         print("Job failed. " + str(e))
         return {"status": 500, "body": json.dumps(f"Job failed. {str(e)}")}
