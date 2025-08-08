@@ -1,26 +1,42 @@
 from airflow import DAG
 from airflow.operators.python import PythonOperator, BranchPythonOperator
 from airflow.providers.amazon.aws.operators.lambda_function import LambdaInvokeFunctionOperator
+from airflow.providers.amazon.aws.operators.ecs import EcsRunTaskOperator
 from airflow.providers.snowflake.operators.snowflake import SnowflakeSqlApiOperator
+from airflow.providers.docker.operators.docker import DockerOperator
 from airflow.exceptions import AirflowFailException
-from configs.aws import AWS_CONN_ID, S3_BUCKET, RAW_FOLDER, STAGING_FOLDER, REGION_NAME
-from configs.estat import BASE_URL
-from configs.snowflake import SNOWFLAKE_CONN_ID, S3_STAGE_NAME, ESTAT_DATABASE, ESTAT_SCHEMA_STG, DEFAULT_WAREHOUSE, SNOWFLAKE_SQL_DIR
-from configs.airflow import AIRFLOW_ROOT_DIR
+from utils.load_config_info import load_config
+from docker.types import Mount
 from datetime import datetime
 import json
 
-# aws lambda function name
-LAMBDA_CRAWL_DATA = "estat_crawl_newest_expense_data"
-LAMBDA_CLEAN_DATA = "estat_clean_expense_data"
-TARGET_FOLDER = "expense"
+# # aws lambda function name
+# lambda_crawl_data = "estat_crawl_newest_expense_data"
+# lambda_crawl_data = "estat_clean_expense_data"
+# target_folder = "expense"
 
-# snowflake file info
-SQL_LOAD_DATA_FILE_PATH = f"{AIRFLOW_ROOT_DIR}/{SNOWFLAKE_SQL_DIR}/{TARGET_FOLDER}/load_expense.sql"
-TARGET_TABLE = "fact_expense_stg"
+# # snowflake file info
+# sql_load_data_file_path = f"{AIRFLOW_ROOT_DIR}/{SNOWFLAKE_SQL_DIR}/{target_folder}/load_expense.sql"
+# TARGET_TABLE = "fact_expense_stg"
 
-# data source info
-STAT_URL = "https://www.e-stat.go.jp/stat-search/files?page=1&layout=datalist&toukei=00200561&tstat=000000330001&cycle=1&tclass1=000000330001&tclass2=000000330004&tclass3=000000330005&tclass4val=0"
+# # data source info
+# STAT_URL = "https://www.e-stat.go.jp/stat-search/files?page=1&layout=datalist&toukei=00200561&tstat=000000330001&cycle=1&tclass1=000000330001&tclass2=000000330004&tclass3=000000330005&tclass4val=0"
+dag_id = "fact_expense_pipeline_dag"
+config = load_config(dag_id)
+
+# aws info
+aws_conn_id = config["aws"]["aws_conn_id"]
+region_name = config["aws"]["region_name"]
+s3_bucket = config["aws"]["s3"]["bucket"]
+raw_folder = config["aws"]["s3"]["raw_folder"]
+staging_folder  = config["aws"]["s3"]["staging_folder"]
+target_folder = config["aws"]["s3"]["target_folder"]
+lambda_crawl_data = config["aws"]["lambda"]["crawl_data"]
+lambda_clean_data = config["aws"]["lambda"]["clean_data"]
+
+# snowflake sql file path to load data from s3 to table
+sql_load_data_file_path = f'{config["airflow"]["airflow_root_dir"]}/{config["snowflake"]["sql_dir"]}/{config["snowflake"]["sql"]["load_data_file"]}'
+
 
 def check_lambda_response(**context):
     """
@@ -48,7 +64,7 @@ def check_lambda_response(**context):
     if response_status == 200:
         output_file = payload_data.get("output_file")
         context["ti"].xcom_push(key="output_file", value=output_file)
-        if function_name == LAMBDA_CRAWL_DATA: return "invoke_clean_lambda"
+        if function_name == lambda_crawl_data: return "invoke_clean_lambda"
     if response_status == 404:
         return "skip_task"
     if response_status in [400,500]:
@@ -58,30 +74,30 @@ def skip_task():
     print("Skip task to invoke clean lambda function because no file is downloaded")
 
 def dummy_task(**context):
-    context["ti"].xcom_push(key="output_file", value="stg/expense/expense_202403_20250801.csv")
+    context["ti"].xcom_push(key="output_file", value="stg/expense/expense_202402_20250801.csv")
 
 with DAG(
-    dag_id = "fact_expense_pipeline_dag",
+    dag_id = dag_id,
     start_date = datetime(2025,7,28),
     schedule = None,
     catchup = False
 ) as dag:
 # read sql file to load data from s3 bucket to stg table in snowflake
-    with open(SQL_LOAD_DATA_FILE_PATH) as f:
+    with open(sql_load_data_file_path) as f:
         copy_sql = f.read()
 
     # invoke_crawl_lambda = LambdaInvokeFunctionOperator(
     #     task_id = "invoke_crawl_lambda",
-    #     function_name = LAMBDA_CRAWL_DATA, 
-    #     aws_conn_id = AWS_CONN_ID,
+    #     function_name = lambda_crawl_data, 
+    #     aws_conn_id = aws_conn_id,
     #     payload = json.dumps({
-    #         "target_bucket": S3_BUCKET,
-    #         "target_folder": RAW_FOLDER + "/" + TARGET_FOLDER,
-    #         "downloaded_list": f"{RAW_FOLDER}/{TARGET_FOLDER}/downloaded_list",
-    #         "base_url": BASE_URL,
-    #         "stat_url": STAT_URL
+    #         "target_bucket": s3_bucket,
+    #         "target_folder": raw_folder + "/" + target_folder,
+    #         "downloaded_list": f"{raw_folder}/{target_folder}/downloaded_list",
+    #         "base_url": config["data_source"]["base_url"],
+    #         "stat_url": config["data_source"]["stat_url"]
     #     }),
-    #     region_name = REGION_NAME,
+    #     region_name = region_name,
     #     invocation_type = "RequestResponse",
     #     )
 
@@ -92,15 +108,15 @@ with DAG(
 
     # invoke_clean_lambda = LambdaInvokeFunctionOperator(
     #     task_id = "invoke_clean_lambda",
-    #     function_name = LAMBDA_CLEAN_DATA,
-    #     aws_conn_id = AWS_CONN_ID,
+    #     function_name = lambda_clean_data,
+    #     aws_conn_id = aws_conn_id,
     #     payload = json.dumps({
-    #         "s3_bucket": S3_BUCKET,
-    #         "raw_folder": RAW_FOLDER + "/" + TARGET_FOLDER,
-    #         "clean_folder": STAGING_FOLDER + "/" + TARGET_FOLDER,
+    #         "s3_bucket": s3_bucket,
+    #         "raw_folder": raw_folder + "/" + target_folder,
+    #         "clean_folder": staging_folder + "/" + target_folder,
     #         "file_name": "{{ ti.xcom_pull(key='output_file', task_ids='check_crawl_lambda_response')}}",
     #     }),
-    #     region_name = REGION_NAME
+    #     region_name = region_name
     # )
 
     # check_clean_lambda_response = PythonOperator(
@@ -115,22 +131,44 @@ with DAG(
 
     # load_data_to_stg_table = SnowflakeSqlApiOperator(
     #     task_id = "load_data_to_stg_table",
-    #     snowflake_conn_id = SNOWFLAKE_CONN_ID,
+    #     snowflake_conn_id = config["snowflake"]["snowflake_conn_id"],
     #     sql = copy_sql.replace("{output_file}", "{{ ti.xcom_pull(key='output_file',task_ids='dummy_task')}}"),
-    #     warehouse = DEFAULT_WAREHOUSE,
+    #     warehouse = config["snowflake"]["default_warehouse"],
     #     params = {
-    #         "db": ESTAT_DATABASE,
-    #         "stg_schema": ESTAT_SCHEMA_STG,
-    #         "stg_table": TARGET_TABLE,
-    #         "s3_stage": S3_STAGE_NAME,
+    #         "db": config["snowflake"]["estat_database"],
+    #         "stg_schema": config["snowflake"]["estat_schema_stg"],
+    #         "stg_table": config["snowflake"]["sql"]["target_table"],
+    #         "s3_stage": config["snowflake"]["s3_stage_name"],
     #     }
     # )
 
-    dummy_task = PythonOperator(
-        task_id = "dummy_task",
-        python_callable = dummy_task
+    run_dbt = EcsRunTaskOperator(
+        task_id = "run_dbt_model",
+        cluster = config["ecs"]["cluster"],
+        aws_conn_id = aws_conn_id,
+        task_definition = config["ecs"]["task"],
+        launch_type="FARGATE",
+        overrides = {
+            "containerOverrides": [{
+                "name": config["dbt"]["image"],
+                "command": ["run", "--select", config["dbt"]["model"]]
+            }]
+        },
+        network_configuration= {
+             "awsvpcConfiguration": {
+             "subnets": config["aws"]["ecs"]["subnets"],
+             "securityGroups": config["aws"]["ecs"]["securityGroups"],
+             "assignPublicIp": "ENABLED",
+            }
+        },
+        region_name = region_name
     )
 
+    # dummy_task = PythonOperator(
+    #     task_id = "dummy_task",
+    #     python_callable = dummy_task
+    # )
+
     # invoke_crawl_lambda >> check_crawl_lambda_response >> [invoke_clean_lambda, skip_task] 
-    # invoke_clean_lambda >> check_clean_lambda_response >> load_data_to_stg_table
-    # dummy_task >> load_data_to_stg_table
+    # invoke_clean_lambda >> check_clean_lambda_response >> load_data_to_stg_table >> run_dbt
+    # dummy_task >> load_data_to_stg_table 

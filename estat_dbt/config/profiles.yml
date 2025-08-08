@@ -1,0 +1,13 @@
+estat_dbt:
+  outputs:
+    dev:
+      account: "{{ env_var('snowflake_account') }}"
+      user: "{{ env_var('dbt_user') }}"
+      password: "{{ env_var('dbt_password') }}"
+      role: dev
+      database: estat_db
+      schema: estat_stg
+      threads: 3
+      type: snowflake
+      warehouse: compute_wh
+  target: dev
