@@ -36,5 +36,5 @@ models:
       +materialized: table
       +schema: estat_transformed
     mart:
-      +materialized: table
+      +materialized: view
       +schema: estat_mart

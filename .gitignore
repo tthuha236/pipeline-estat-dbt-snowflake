@@ -4,3 +4,13 @@ data
 Untitled.ipynb
 Untitled1.ipynb
 .DS_Store
+airflow/logs/
+airflow/config/airflow.cfg
+snowflake/initial_setup.sql
+airflow-secrets/
+estat_dbt/logs
+dbt-config/
+downloaded/
+downloaded_file.xlsx
+estat_dbt/commands.sh
+lambda_layer/

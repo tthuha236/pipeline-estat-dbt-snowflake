@@ -7,10 +7,9 @@ models:
     description: "Transformed table for fact expense"
 sources:
   - name: fact_expense_stg
-    description: "Staging table"
+    description: "Staging table for fact expense"
     database: estat_db
     schema: estat_stg
     tables:
       - name: input_table
         identifier: fact_expense_stg
-        description: "Staging table for fact expense"

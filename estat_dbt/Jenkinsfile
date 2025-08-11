@@ -1,0 +1,56 @@
+pipeline {
+    agent any
+    environment {
+        IMAGE_TAG = "${env.GIT_COMMIT}"
+        DBT_CHANGED = 'false'
+    }
+    stages {
+        stage('Checkout'){
+            steps {
+                checkout scm
+            }
+        }
+        stage('Check dbt changes'){
+            steps{
+                script {
+                    def changedFiles = sh(
+                        script: "git diff-tree --no-commit-id --name-only -r HEAD"
+                        returnStdout: true
+                    ).trim()
+                    if (!changedFiles.contains('estat_dbt')){
+                        echo "No changes in estat_dbt folder. Skip building."
+                        currentBuild.result = 'SUCCESS'
+                        return
+                    } else {
+                        env.DBT_CHANGED = 'true'
+                    }
+                }
+            }
+        }
+        stage('Build docker image'){
+            when {
+                expression { env.DBT_CHANGED == 'true'}
+            }
+            steps {
+                sh "docker build -t $ECR_REPO:$IMAGE_TAG estat_dbt/"
+            }
+        }
+        stage('Push to ECR'){
+            when {
+                expression { env.DBT_CHANGED == 'true'}
+            }
+            steps {
+                withCredentials([[
+                    $class: 'AmazonWebServicesCredentialsBinding',
+                    credentialsId: 'estat-aws-jenkins-creds'
+                ]]
+                ){
+                sh '''
+                    aws ecr get-login-password --region $ECR_REGION | docker login --username AWS --password-stdin $ECR_REPO
+                    docker push $ECR_REPO:$IMAGE_TAG
+                '''
+                }
+            }
+        }
+    }
+}

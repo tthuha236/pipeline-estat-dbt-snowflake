@@ -1,0 +1,30 @@
+airflow:
+  airflow_root_dir: "/opt/airflow"
+aws:
+  aws_conn_id: "estat-airflow-aws-connection"
+  s3:
+    bucket: "estat-dbt-sf"
+    raw_folder: "raw"
+    staging_folder: "stg"
+  region_name: "ap-northeast-1"
+  ecs:
+    cluster: "estat-dbt-cluster"
+    subnets: 
+      - "subnet-008f6f54e5005683e"
+    securityGroups: 
+      - "sg-0ac92d3470441e458"
+    task: "estat-dbt-transform-task"
+snowflake:
+  snowflake_conn_id: "estat-airflow-snowflake-connection2"
+  s3_stage_name: "s3_estat_stage"
+  estat_database: "ESTAT_DB"
+  estat_schema_stg: "ESTAT_STG"
+  estat_schema_transformed: "ESTAT_TRANSFORMED"
+  estat_schema_mart: "ESTAT_MART"
+  default_warehouse: "COMPUTE_WH"
+  sql_dir: "dags/sql/snowflake"
+dbt:
+  image: "estat_dbt_image"
+data_source:
+  base_url: "https://www.e-stat.go.jp"
+  
