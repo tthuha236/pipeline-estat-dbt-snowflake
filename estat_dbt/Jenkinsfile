@@ -14,7 +14,7 @@ pipeline {
             steps{
                 script {
                     def changedFiles = sh(
-                        script: "git diff-tree --no-commit-id --name-only -r HEAD"
+                        script: "git diff-tree --no-commit-id --name-only -r HEAD",
                         returnStdout: true
                     ).trim()
                     if (!changedFiles.contains('estat_dbt')){
