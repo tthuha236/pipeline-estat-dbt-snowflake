@@ -1,8 +1,9 @@
+def dbtChanged = false
+
 pipeline {
     agent any
     environment {
         IMAGE_TAG = "${env.GIT_COMMIT}"
-        DBT_CHANGED = 'false'
     }
     stages {
         stage('Checkout'){
@@ -23,14 +24,14 @@ pipeline {
                         return
                     } else {
                         echo "There are changes in dbt folder, start building docker image.."
-                        env.DBT_CHANGED = 'true'
+                        dbtChanged = true 
                     }
                 }
             }
         }
         stage('Build docker image'){
             when {
-                expression { env.DBT_CHANGED == 'true'}
+                expression { dbtChanged == true }
             }
             steps {
                 sh "docker build -t $ECR_REPO:$IMAGE_TAG estat_dbt/"
@@ -38,7 +39,7 @@ pipeline {
         }
         stage('Push to ECR'){
             when {
-                expression { env.DBT_CHANGED == 'true'}
+                expression { dbtChanged == true }
             }
             steps {
                 withCredentials([[
