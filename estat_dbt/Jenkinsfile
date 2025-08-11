@@ -22,6 +22,7 @@ pipeline {
                         currentBuild.result = 'SUCCESS'
                         return
                     } else {
+                        echo "There are changes in dbt folder, start building docker image.."
                         env.DBT_CHANGED = 'true'
                     }
                 }
