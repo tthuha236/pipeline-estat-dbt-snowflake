@@ -51,12 +51,7 @@ pipeline {
             when {
                 expression { dbtChanged == true }
             }
-            steps {
-                withCredentials([[
-                    $class: 'AmazonWebServicesCredentialsBinding',
-                    credentialsId: 'estat-aws-jenkins-creds'
-                ]]
-                ){
+            steps {{
                 sh '''
                     aws ecr get-login-password --region $ECR_REGION | docker login --username AWS --password-stdin $ECR_REPO
                     docker push $ECR_REPO:$IMAGE_TAG
