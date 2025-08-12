@@ -3,3 +3,4 @@ docker-plugin
 workflow-aggregator
 blueocean
 aws-credentials
+pipeline-utility-steps

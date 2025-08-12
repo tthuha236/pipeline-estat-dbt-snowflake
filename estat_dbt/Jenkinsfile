@@ -9,7 +9,7 @@ pipeline {
         stage('Read config'){
             steps {
                 script {
-                    def config = readYaml file: 'config.yml'
+                    def config = readYaml file: 'estat_dbt/config.yml'
                     env.ECR_REPO = config.env.ecr_repo
                     env.ECR_REGION = config.env.ecr_region
                 }
