@@ -3,7 +3,8 @@ FROM jenkins/jenkins:lts
 USER root
 RUN apt-get update && \
     apt-get install -y git awscli docker.io
-RUN usermod -aG docker jenkins
+RUN groupmod -g 555 docker && \
+    usermod -aG docker jenkins
 
 USER jenkins
 COPY ./plugins.txt /usr/share/jenkins/ref/plugins.txt
