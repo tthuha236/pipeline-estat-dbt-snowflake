@@ -6,6 +6,16 @@ pipeline {
         IMAGE_TAG = "${env.GIT_COMMIT}"
     }
     stages {
+        stage('Read config'){
+            steps {
+                script {
+                    def config = readYaml file: 'config.yml'
+                    env.ECR_REPO = config.env.ecr_repo
+                    env.ECR_REGION = config.env.ecr_region
+                }
+                echo "Setting ECR REPO =  ${env.ECR_REPO}"
+            }
+        }
         stage('Checkout'){
             steps {
                 checkout scm
