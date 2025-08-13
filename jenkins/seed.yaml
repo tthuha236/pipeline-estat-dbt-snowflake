@@ -15,7 +15,7 @@ jobs:
         }
         steps {
             dsl {
-              external('/jenkins/jobs/*.groovy') // look for dsl scripts
+              external('jenkins/jobs/*.groovy') // look for dsl scripts
             }
         }
       }

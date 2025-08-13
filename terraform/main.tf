@@ -23,8 +23,8 @@ resource "aws_security_group" "jenkins_sg" {
   }
 
   ingress {
-    from_port = 80
-    to_port = 80
+    from_port = 8080
+    to_port = 8080
     protocol = "tcp"
     cidr_blocks = [var.allowed_ip] # Jenkins UI, restrict as needed
   }
