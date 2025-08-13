@@ -1,0 +1,21 @@
+jobs:
+  - script: |
+      job('seed-job'){
+        description('Seed job to process Job DSL scripts from Github')
+        scm {
+          git {
+            remote {
+              url('https://github.com/tthuha236/pipeline-estat-dbt-snowflake.git')
+            }
+            branches('main')
+          }
+        }
+        triggers {
+            cron('@once')
+        }
+        steps {
+            dsl {
+              external('/jenkins/jobs/*.groovy') // look for dsl scripts
+            }
+        }
+      }

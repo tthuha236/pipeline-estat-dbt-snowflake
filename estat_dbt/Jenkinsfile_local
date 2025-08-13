@@ -1,0 +1,68 @@
+def dbtChanged = false
+
+pipeline {
+    agent any
+    environment {
+        IMAGE_TAG = "${env.GIT_COMMIT}"
+    }
+    stages {
+        stage('Read config'){
+            steps {
+                script {
+                    def config = readYaml file: 'estat_dbt/config.yml'
+                    env.ECR_REPO = config.env.ecr_repo
+                    env.ECR_REGION = config.env.ecr_region
+                }
+                echo "Setting ECR REPO =  ${env.ECR_REPO}"
+            }
+        }
+        stage('Checkout'){
+            steps {
+                checkout scm
+            }
+        }
+        stage('Check dbt changes'){
+            steps{
+                script {
+                    def changedFiles = sh(
+                        script: "git diff-tree --no-commit-id --name-only -r HEAD",
+                        returnStdout: true
+                    ).trim()
+                    if (!changedFiles.contains('estat_dbt')){
+                        echo "No changes in estat_dbt folder. Skip building."
+                        currentBuild.result = 'SUCCESS'
+                        return
+                    } else {
+                        echo "There are changes in dbt folder, start building docker image.."
+                        dbtChanged = true 
+                    }
+                }
+            }
+        }
+        stage('Build docker image'){
+            when {
+                expression { dbtChanged == true }
+            }
+            steps {
+                sh "docker build -t $ECR_REPO:$IMAGE_TAG estat_dbt/"
+            }
+        }
+        stage('Push to ECR'){
+            when {
+                expression { dbtChanged == true }
+            }
+            steps {
+                withCredentials([[
+                    $class: 'AmazonWebServicesCredentialsBinding',
+                    credentialsId: 'estat-aws-jenkins-creds'
+                ]]
+                ){
+                sh '''
+                    aws ecr get-login-password --region $ECR_REGION | docker login --username AWS --password-stdin $ECR_REPO
+                    docker push $ECR_REPO:$IMAGE_TAG
+                '''
+                }
+            }
+        }
+    }
+}

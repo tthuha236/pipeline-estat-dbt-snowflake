@@ -16,3 +16,5 @@ downloaded_file.xlsx
 estat_dbt/commands.sh
 lambda_layer/
 crawl_file.ipynb
+terraform/.terraform/
+terraform/.terraform.lock.hcl

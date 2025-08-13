@@ -4,3 +4,5 @@ workflow-aggregator
 blueocean
 aws-credentials
 pipeline-utility-steps
+job-dsl
+configuration-as-code

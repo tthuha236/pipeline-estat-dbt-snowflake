@@ -16,4 +16,4 @@ wget https://raw.githubusercontent.com/tthuha236/pipeline-estat-dbt-snowflake/re
 docker build -t estat-jenkins .
 
 # Run Jenkins container (add volumes as needed)
-docker run -d -p 8080:8080 -v /var/run/docker.sock:/var/run/docker.sock estat-jenkins
+docker run -d -p 80:8080 -v /var/run/docker.sock:/var/run/docker.sock estat-jenkins
