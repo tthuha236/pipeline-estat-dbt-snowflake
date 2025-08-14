@@ -11,9 +11,13 @@ mkdir /home/ubuntu/jenkins-setup
 cd /home/ubuntu/jenkins-setup
 wget https://raw.githubusercontent.com/tthuha236/pipeline-estat-dbt-snowflake/refs/heads/main/jenkins/plugins.txt -O plugins.txt
 wget https://raw.githubusercontent.com/tthuha236/pipeline-estat-dbt-snowflake/refs/heads/main/jenkins/Dockerfile -O Dockerfile
+wget https://raw.githubusercontent.com/tthuha236/pipeline-estat-dbt-snowflake/refs/heads/main/jenkins/seed.yaml -O seed.yaml
 
 # Build Jenkins image 
 docker build -t estat-jenkins .
 
 # Run Jenkins container (add volumes as needed)
-docker run -d -p 8080:8080 -v /var/run/docker.sock:/var/run/docker.sock estat-jenkins
+docker run -d -p 8080:8080 \
+    -v /var/run/docker.sock:/var/run/docker.sock \
+    -e CASC_JENKINS_CONFIG=/var/jenkins_home/seed.yaml \
+    estat-jenkins

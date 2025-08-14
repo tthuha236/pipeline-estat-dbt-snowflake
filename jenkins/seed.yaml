@@ -19,3 +19,6 @@ jobs:
             }
         }
       }
+security:
+  globaljobdslsecurityconfiguration:
+    useScriptSecurity: false

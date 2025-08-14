@@ -17,3 +17,8 @@ variable "vpc_security_group_ids" {
     description = "List of security groups attached to EC2"
     type = list(string)
 }
+
+variable "iam_instance_profile" {
+    description = "name of instance profile for ec2 instance"
+    default = null
+}

@@ -8,5 +8,5 @@ RUN groupmod -g 555 docker && \
 
 USER jenkins
 COPY ./plugins.txt /usr/share/jenkins/ref/plugins.txt
-COPY ./seed.yaml /var/jenkins_home/seed.yaml
 RUN jenkins-plugin-cli --plugin-file /usr/share/jenkins/ref/plugins.txt
+COPY ./seed.yaml /var/jenkins_home/seed.yaml

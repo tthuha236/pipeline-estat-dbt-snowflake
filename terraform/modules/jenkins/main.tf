@@ -7,4 +7,5 @@ resource "aws_instance" "jenkins" {
     tags = {
         Name = "Estat jenkins server"
     }
+    iam_instance_profile = var.iam_instance_profile
 }

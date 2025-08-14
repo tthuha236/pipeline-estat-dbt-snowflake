@@ -41,6 +41,30 @@ resource "aws_security_group" "jenkins_sg" {
   }
 }
 
+# create instance profile for jenkins server
+resource "aws_iam_policy" "ecr_custom_policy" {
+  name = "PushImageToECRCustomPolicy"
+  policy = file("./policies/PushImageToECRCustomPolicy.json")
+}
+
+module "iam_roles" {
+  source = "./modules/iam_roles"
+  role_name = "jenkins-server-role"
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [{
+      Effect = "Allow",
+      Principal = { Service = "ec2.amazonaws.com" },
+      Action = "sts:AssumeRole"
+    }]
+  })
+  policy_arns = [
+    aws_iam_policy.ecr_custom_policy.arn
+  ]
+  instance_profile_name = "jenkins-server-instance-profile"
+}
+
+
 # Create EC2 instance to host jenkins server
 module "jenkins" {
   source = "./modules/jenkins"
@@ -48,4 +72,5 @@ module "jenkins" {
   instance_type = var.jenkins_instance_type
   vpc_security_group_ids = [aws_security_group.jenkins_sg.id]
   key_name = var.jenkins_key_name
+  iam_instance_profile = module.iam_roles.instance_profile_name
 }
