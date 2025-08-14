@@ -1,3 +1,10 @@
+variable "environment" {
+    description = "Deployment environment (dev, stg, prod)"
+    type = string
+    default = "dev"
+}
+
+
 variable "aws_region" {
     type = string
     default = "ap-northeast-1"

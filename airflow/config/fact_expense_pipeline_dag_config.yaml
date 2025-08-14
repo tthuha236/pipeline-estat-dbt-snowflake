@@ -1,8 +1,8 @@
 # aws lambda function name
 aws:
   lambda: 
-    crawl_data: "estat_crawl_newest_expense_data"
-    clean_data: "estat_clean_expense_data"
+    crawl_data: "estat-fact-expense-crawl-data-{{ env }}"
+    clean_data: "estat-fact-expense-clean-data-{{ env }}"
   s3:
     target_folder: "expense"
 snowflake:

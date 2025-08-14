@@ -9,6 +9,7 @@ from utils.load_config_info import load_config
 from docker.types import Mount
 from datetime import datetime
 import json
+import os
 
 # # aws lambda function name
 # lambda_crawl_data = "estat_crawl_newest_expense_data"
@@ -22,6 +23,8 @@ import json
 # # data source info
 # STAT_URL = "https://www.e-stat.go.jp/stat-search/files?page=1&layout=datalist&toukei=00200561&tstat=000000330001&cycle=1&tclass1=000000330001&tclass2=000000330004&tclass3=000000330005&tclass4val=0"
 dag_id = "fact_expense_pipeline_dag"
+env = os.getenv("ENVIRONMENT", "")
+print(f"Running in ${env} environment")
 config = load_config(dag_id)
 
 # aws info
@@ -31,8 +34,8 @@ s3_bucket = config["aws"]["s3"]["bucket"]
 raw_folder = config["aws"]["s3"]["raw_folder"]
 staging_folder  = config["aws"]["s3"]["staging_folder"]
 target_folder = config["aws"]["s3"]["target_folder"]
-lambda_crawl_data = config["aws"]["lambda"]["crawl_data"]
-lambda_clean_data = config["aws"]["lambda"]["clean_data"]
+lambda_crawl_data = config["aws"]["lambda"]["crawl_data"].replace("{{ env }}", env)
+lambda_clean_data = config["aws"]["lambda"]["clean_data"].replace("{{ env }}", env)
 
 # snowflake sql file path to load data from s3 to table
 sql_load_data_file_path = f'{config["airflow"]["airflow_root_dir"]}/{config["snowflake"]["sql_dir"]}/{config["snowflake"]["sql"]["load_data_file"]}'
@@ -86,48 +89,48 @@ with DAG(
     with open(sql_load_data_file_path) as f:
         copy_sql = f.read()
 
-    # invoke_crawl_lambda = LambdaInvokeFunctionOperator(
-    #     task_id = "invoke_crawl_lambda",
-    #     function_name = lambda_crawl_data, 
-    #     aws_conn_id = aws_conn_id,
-    #     payload = json.dumps({
-    #         "target_bucket": s3_bucket,
-    #         "target_folder": raw_folder + "/" + target_folder,
-    #         "downloaded_list": f"{raw_folder}/{target_folder}/downloaded_list",
-    #         "base_url": config["data_source"]["base_url"],
-    #         "stat_url": config["data_source"]["stat_url"]
-    #     }),
-    #     region_name = region_name,
-    #     invocation_type = "RequestResponse",
-    #     )
+    invoke_crawl_lambda = LambdaInvokeFunctionOperator(
+        task_id = "invoke_crawl_lambda",
+        function_name = lambda_crawl_data, 
+        aws_conn_id = aws_conn_id,
+        payload = json.dumps({
+            "target_bucket": s3_bucket,
+            "target_folder": raw_folder + "/" + target_folder,
+            "downloaded_list": f"{raw_folder}/{target_folder}/downloaded_list",
+            "base_url": config["data_source"]["base_url"],
+            "stat_url": config["data_source"]["stat_url"]
+        }),
+        region_name = region_name,
+        invocation_type = "RequestResponse",
+        )
 
-    # check_crawl_lambda_response = BranchPythonOperator(
-    #     task_id = "check_crawl_lambda_response",
-    #     python_callable = check_lambda_response,
-    # )
+    check_crawl_lambda_response = BranchPythonOperator(
+        task_id = "check_crawl_lambda_response",
+        python_callable = check_lambda_response,
+    )
 
-    # invoke_clean_lambda = LambdaInvokeFunctionOperator(
-    #     task_id = "invoke_clean_lambda",
-    #     function_name = lambda_clean_data,
-    #     aws_conn_id = aws_conn_id,
-    #     payload = json.dumps({
-    #         "s3_bucket": s3_bucket,
-    #         "raw_folder": raw_folder + "/" + target_folder,
-    #         "clean_folder": staging_folder + "/" + target_folder,
-    #         "file_name": "{{ ti.xcom_pull(key='output_file', task_ids='check_crawl_lambda_response')}}",
-    #     }),
-    #     region_name = region_name
-    # )
+    invoke_clean_lambda = LambdaInvokeFunctionOperator(
+        task_id = "invoke_clean_lambda",
+        function_name = lambda_clean_data,
+        aws_conn_id = aws_conn_id,
+        payload = json.dumps({
+            "s3_bucket": s3_bucket,
+            "raw_folder": raw_folder + "/" + target_folder,
+            "clean_folder": staging_folder + "/" + target_folder,
+            "file_name": "{{ ti.xcom_pull(key='output_file', task_ids='check_crawl_lambda_response')}}",
+        }),
+        region_name = region_name
+    )
 
     # check_clean_lambda_response = PythonOperator(
     #     task_id = "check_clean_lambda_response",
     #     python_callable = check_lambda_response
     # )
 
-    # skip_task = PythonOperator(
-    #     task_id = "skip_task",
-    #     python_callable = skip_task
-    # )
+    skip_task = PythonOperator(
+        task_id = "skip_task",
+        python_callable = skip_task
+    )
 
     # load_data_to_stg_table = SnowflakeSqlApiOperator(
     #     task_id = "load_data_to_stg_table",
@@ -142,33 +145,33 @@ with DAG(
     #     }
     # )
 
-    run_dbt = EcsRunTaskOperator(
-        task_id = "run_dbt_model",
-        cluster = config["ecs"]["cluster"],
-        aws_conn_id = aws_conn_id,
-        task_definition = config["ecs"]["task"],
-        launch_type="FARGATE",
-        overrides = {
-            "containerOverrides": [{
-                "name": config["dbt"]["image"],
-                "command": ["run", "--select", config["dbt"]["model"]]
-            }]
-        },
-        network_configuration= {
-             "awsvpcConfiguration": {
-             "subnets": config["aws"]["ecs"]["subnets"],
-             "securityGroups": config["aws"]["ecs"]["securityGroups"],
-             "assignPublicIp": "ENABLED",
-            }
-        },
-        region_name = region_name
-    )
+    # run_dbt = EcsRunTaskOperator(
+    #     task_id = "run_dbt_model",
+    #     cluster = config["aws"]["ecs"]["cluster"],
+    #     aws_conn_id = aws_conn_id,
+    #     task_definition = config["aws"]["ecs"]["task"],
+    #     launch_type="FARGATE",
+    #     overrides = {
+    #         "containerOverrides": [{
+    #             "name": config["dbt"]["image"],
+    #             "command": ["run", "--select", config["dbt"]["model"]]
+    #         }]
+    #     },
+    #     network_configuration= {
+    #          "awsvpcConfiguration": {
+    #          "subnets": config["aws"]["ecs"]["subnets"],
+    #          "securityGroups": config["aws"]["ecs"]["securityGroups"],
+    #          "assignPublicIp": "ENABLED",
+    #         }
+    #     },
+    #     region_name = region_name
+    # )
 
     # dummy_task = PythonOperator(
     #     task_id = "dummy_task",
     #     python_callable = dummy_task
     # )
 
-    # invoke_crawl_lambda >> check_crawl_lambda_response >> [invoke_clean_lambda, skip_task] 
+    invoke_crawl_lambda >> check_crawl_lambda_response >> [invoke_clean_lambda, skip_task] 
     # invoke_clean_lambda >> check_clean_lambda_response >> load_data_to_stg_table >> run_dbt
     # dummy_task >> load_data_to_stg_table 
