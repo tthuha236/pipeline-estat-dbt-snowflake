@@ -122,56 +122,56 @@ with DAG(
         region_name = region_name
     )
 
-    # check_clean_lambda_response = PythonOperator(
-    #     task_id = "check_clean_lambda_response",
-    #     python_callable = check_lambda_response
-    # )
+    check_clean_lambda_response = PythonOperator(
+        task_id = "check_clean_lambda_response",
+        python_callable = check_lambda_response
+    )
 
     skip_task = PythonOperator(
         task_id = "skip_task",
         python_callable = skip_task
     )
 
-    # load_data_to_stg_table = SnowflakeSqlApiOperator(
-    #     task_id = "load_data_to_stg_table",
-    #     snowflake_conn_id = config["snowflake"]["snowflake_conn_id"],
-    #     sql = copy_sql.replace("{output_file}", "{{ ti.xcom_pull(key='output_file',task_ids='dummy_task')}}"),
-    #     warehouse = config["snowflake"]["default_warehouse"],
-    #     params = {
-    #         "db": config["snowflake"]["estat_database"],
-    #         "stg_schema": config["snowflake"]["estat_schema_stg"],
-    #         "stg_table": config["snowflake"]["sql"]["target_table"],
-    #         "s3_stage": config["snowflake"]["s3_stage_name"],
-    #     }
-    # )
+    load_data_to_stg_table = SnowflakeSqlApiOperator(
+        task_id = "load_data_to_stg_table",
+        snowflake_conn_id = config["snowflake"]["snowflake_conn_id"],
+        sql = copy_sql.replace("{output_file}", "{{ ti.xcom_pull(key='output_file',task_ids='dummy_task')}}"),
+        warehouse = config["snowflake"]["default_warehouse"],
+        params = {
+            "db": config["snowflake"]["estat_database"],
+            "stg_schema": config["snowflake"]["estat_schema_stg"],
+            "stg_table": config["snowflake"]["sql"]["target_table"],
+            "s3_stage": config["snowflake"]["s3_stage_name"],
+        }
+    )
 
-    # run_dbt = EcsRunTaskOperator(
-    #     task_id = "run_dbt_model",
-    #     cluster = config["aws"]["ecs"]["cluster"],
-    #     aws_conn_id = aws_conn_id,
-    #     task_definition = config["aws"]["ecs"]["task"],
-    #     launch_type="FARGATE",
-    #     overrides = {
-    #         "containerOverrides": [{
-    #             "name": config["dbt"]["image"],
-    #             "command": ["run", "--select", config["dbt"]["model"]]
-    #         }]
-    #     },
-    #     network_configuration= {
-    #          "awsvpcConfiguration": {
-    #          "subnets": config["aws"]["ecs"]["subnets"],
-    #          "securityGroups": config["aws"]["ecs"]["securityGroups"],
-    #          "assignPublicIp": "ENABLED",
-    #         }
-    #     },
-    #     region_name = region_name
-    # )
+    run_dbt = EcsRunTaskOperator(
+        task_id = "run_dbt_model",
+        cluster = config["aws"]["ecs"]["cluster"],
+        aws_conn_id = aws_conn_id,
+        task_definition = config["aws"]["ecs"]["task"],
+        launch_type="FARGATE",
+        overrides = {
+            "containerOverrides": [{
+                "name": config["dbt"]["image"],
+                "command": ["run", "--select", config["dbt"]["model"]]
+            }]
+        },
+        network_configuration= {
+             "awsvpcConfiguration": {
+             "subnets": config["aws"]["ecs"]["subnets"],
+             "securityGroups": config["aws"]["ecs"]["securityGroups"],
+             "assignPublicIp": "ENABLED",
+            }
+        },
+        region_name = region_name
+    )
 
-    # dummy_task = PythonOperator(
-    #     task_id = "dummy_task",
-    #     python_callable = dummy_task
-    # )
+    dummy_task = PythonOperator(
+        task_id = "dummy_task",
+        python_callable = dummy_task
+    )
 
     invoke_crawl_lambda >> check_crawl_lambda_response >> [invoke_clean_lambda, skip_task] 
-    # invoke_clean_lambda >> check_clean_lambda_response >> load_data_to_stg_table >> run_dbt
+    invoke_clean_lambda >> check_clean_lambda_response >> load_data_to_stg_table >> run_dbt
     # dummy_task >> load_data_to_stg_table 
