@@ -1,0 +1,52 @@
+def dagsChanged = false
+
+pipeline {
+    agent any
+    environment {
+        AIRFLOW_DNS = "ec2-57-181-33-48.ap-northeast-1.compute.amazonaws.com"
+    }
+    stages {
+        stage('Checkout'){
+            steps {
+                checkout scm
+            }
+        }
+        stage('Check for changes'){
+            steps{
+                script {
+                    def changedFiles = sh(
+                        script: "git diff-tree --no-commit-id --name-only -r HEAD",
+                        returnStdout: true
+                    ).trim()
+                    if (!changedFiles.contains('airflow/config') and !changedFiles.contains('airflow/dags')){
+                        echo "No changes in airflow dags. Skip task."
+                        currentBuild.result = 'SUCCESS'
+                        return
+                    } else {
+                        echo "There are changes in airflow dags, start cloning latest repo to airflow instance.."
+                        dagsChanged = true 
+                    }
+                }
+            }
+        }
+        stage('Clone to Airflow instance if changed'){
+            when {
+                expression { dagstChanged == true }
+            }
+            steps {
+                sshagents(['jenkins-ec2-key']){
+                    sh '''
+                    ssh -o StrictHostKeyChecking=no ubuntu@$AIRFLOW_DNS " \
+                    cd /opt && \
+                    mkdir -p /opt/airflow_config && \
+                    cp ./myproject/airflow/config/airflow.cfg ./opt/airflow_config/ && \
+                    rm -rf ./myproject/* && \
+                    cd myproject && \
+                    sudo git clone https://github.com/tthuha236/pipeline-estat-dbt-snowflake.git .
+                    "
+                    '''
+                }
+            }
+        }
+    }
+}
