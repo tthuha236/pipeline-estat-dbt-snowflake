@@ -4,12 +4,6 @@ variable "environment" {
     default = "dev"
 }
 
-
-variable "aws_region" {
-    type = string
-    default = "ap-northeast-1"
-}
-
 variable "aws_vpc_id" {
     type = string
     default = "vpc-2c1f0f4b"
@@ -31,6 +25,21 @@ variable "jenkins_ami_id" {
 }
 
 variable "jenkins_key_name" {
+    type = string
+    default = "estat-jenkins-key"
+}
+
+variable "aiflow_instance_type" {
+    type = string
+    default = "t3.large"
+}
+
+variable "airflow_ami_id" {
+    type = string
+    default = "ami-054400ced365b82a0"
+}
+
+variable "airflow_key_name" {
     type = string
     default = "estat-jenkins-key"
 }

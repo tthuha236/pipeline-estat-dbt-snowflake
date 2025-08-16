@@ -33,7 +33,26 @@ resource "aws_security_group" "jenkins_sg" {
 # create instance profile for jenkins server
 resource "aws_iam_policy" "ecr_custom_policy" {
   name = "PushImageToECRCustomPolicy"
-  policy = file("./policies/PushImageToECRCustomPolicy.json")
+  policy = jsonencode({
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "ecr:GetAuthorizationToken",
+                "ecr:BatchCheckLayerAvailability",
+                "ecr:PutImage",
+                "ecr:InitiateLayerUpload",
+                "ecr:UploadLayerPart",
+                "ecr:CompleteLayerUpload",
+                "ecr:DescribeRepositories",
+                "ecr:CreateRepository",
+                "ecr:ListImages"
+            ],
+            "Resource": "*"
+        }
+    ]
+})
 }
 
 module "iam_roles" {
@@ -62,6 +81,7 @@ module "jenkins" {
   vpc_security_group_ids = [aws_security_group.jenkins_sg.id]
   key_name = var.jenkins_key_name
   iam_instance_profile = module.iam_roles.instance_profile_name
+  environment = var.environment
 }
 
 */

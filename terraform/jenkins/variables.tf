@@ -22,3 +22,5 @@ variable "iam_instance_profile" {
     description = "name of instance profile for ec2 instance"
     default = null
 }
+
+variable "environment" {}

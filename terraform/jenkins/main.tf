@@ -5,7 +5,8 @@ resource "aws_instance" "jenkins" {
     user_data = file("${path.module}/user_data.sh")
     vpc_security_group_ids = var.vpc_security_group_ids
     tags = {
-        Name = "Estat jenkins server"
+        env: "${var.environment}"
+        Name: "Jenkins server"
     }
     iam_instance_profile = var.iam_instance_profile
 }
