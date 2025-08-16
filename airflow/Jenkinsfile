@@ -34,7 +34,7 @@ pipeline {
                 expression { dagsChanged == true }
             }
             steps {
-                sshagents(['jenkins-ec2-key']){
+                sshagent(['jenkins-ec2-key']){
                     sh '''
                     ssh -o StrictHostKeyChecking=no ubuntu@$AIRFLOW_DNS " \
                     cd /opt && \
