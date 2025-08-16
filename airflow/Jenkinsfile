@@ -37,12 +37,12 @@ pipeline {
                 sshagent(['jenkins-ec2-key']){
                     sh '''
                     ssh -o StrictHostKeyChecking=no ubuntu@$AIRFLOW_DNS " \
-                    cd /opt && \
                     mkdir -p /opt/airflow_config && \
-                    cp ./myproject/airflow/config/airflow.cfg ./opt/airflow_config/ && \
-                    rm -rf ./myproject/* && \
-                    cd myproject && \
-                    sudo git clone https://github.com/tthuha236/pipeline-estat-dbt-snowflake.git .
+                    cp /opt/myproject/airflow/config/airflow.cfg /opt/airflow_config/ && \
+                    rm -rf /opt/myproject/* && \
+                    cd /opt/myproject && \
+                    sudo git clone https://github.com/tthuha236/pipeline-estat-dbt-snowflake.git . && \
+                    cp /opt/airflow_config/airflow.cfg ./airflow/config/airflow.cfg
                     "
                     '''
                 }
