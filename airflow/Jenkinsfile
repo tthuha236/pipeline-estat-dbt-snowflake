@@ -38,11 +38,11 @@ pipeline {
                     sh '''
                     ssh -o StrictHostKeyChecking=no ubuntu@$AIRFLOW_DNS " \
                     sudo mkdir -p /opt/airflow_config && \
-                    cp /opt/myproject/airflow/config/airflow.cfg /opt/airflow_config/ && \
+                    sudo cp /opt/myproject/airflow/config/airflow.cfg /opt/airflow_config/ && \
                     sudo rm -rf /opt/myproject/* && \
                     cd /opt/myproject && \
                     sudo git clone https://github.com/tthuha236/pipeline-estat-dbt-snowflake.git . && \
-                    cp /opt/airflow_config/airflow.cfg ./airflow/config/airflow.cfg
+                    sudo cp /opt/airflow_config/airflow.cfg ./airflow/config/airflow.cfg
                     "
                     '''
                 }
