@@ -36,9 +36,9 @@ pipeline {
             steps {
                 sshagent(['jenkins-ec2-key']){
                     sh '''
-                    ssh -o StrictHostKeyChecking=no ubuntu@$AIRFLOW_DNS " \
-                    project_name='pipeline-estat-dbt-snowflake' && \
-                    tmp_folder='pj_latest' && \
+                    ssh -o StrictHostKeyChecking=no ubuntu@$AIRFLOW_DNS ' \
+                    project_name="pipeline-estat-dbt-snowflake" && \
+                    tmp_folder="pj_latest" && \
                     sudo mkdir -p /tmp/$tmp_folder && \
                     sudo git clone https://github.com/tthuha236/pipeline-estat-dbt-snowflake.git /tmp/$tmp_folder && \
                     cd /opt/$project_name/airflow && \
@@ -47,7 +47,7 @@ pipeline {
                     sudo rm -rf ./dags/* && \
                     sudo rsync -av /tmp/$tmp_folder/airflow/dags/ ./dags/ && \
                     sudo rm -rf /tmp/$tmp_folder
-                    "
+                    '
                     '''
                 }
             }
