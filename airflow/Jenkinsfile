@@ -18,7 +18,7 @@ pipeline {
                         script: "git diff-tree --no-commit-id --name-only -r HEAD",
                         returnStdout: true
                     ).trim()
-                    if (!changedFiles.contains('airflow/config') and !changedFiles.contains('airflow/dags')){
+                    if (!changedFiles.contains('airflow/config') && !changedFiles.contains('airflow/dags')){
                         echo "No changes in airflow dags. Skip task."
                         currentBuild.result = 'SUCCESS'
                         return
@@ -31,7 +31,7 @@ pipeline {
         }
         stage('Clone to Airflow instance if changed'){
             when {
-                expression { dagstChanged == true }
+                expression { dagsChanged == true }
             }
             steps {
                 sshagents(['jenkins-ec2-key']){
