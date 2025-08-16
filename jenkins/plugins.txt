@@ -6,3 +6,4 @@ aws-credentials
 pipeline-utility-steps
 job-dsl
 configuration-as-code
+ssh-agent

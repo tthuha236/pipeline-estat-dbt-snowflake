@@ -3,7 +3,7 @@ def dagsChanged = false
 pipeline {
     agent any
     environment {
-        AIRFLOW_DNS = "ec2-57-181-33-48.ap-northeast-1.compute.amazonaws.com"
+        AIRFLOW_DNS = "ec2-54-168-48-161.ap-northeast-1.compute.amazonaws.com"
     }
     stages {
         stage('Checkout'){
