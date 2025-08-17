@@ -85,6 +85,23 @@ resource "aws_iam_policy" "access_s3_policy" {
   })
 }
 
+resource "aws_iam_policy" "access_secretsmanager_policy" {
+    name = "AirflowSecretsManagerAccessPolicy"
+    policy = jsonencode({
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "secretsmanager:GetSecretValue",
+        "secretsmanager:DescribeSecret"
+      ],
+      "Resource": "arn:aws:secretsmanager:${var.region}:${var.account_id}:secret:airflow/connections/*"
+    }
+  ]
+})
+}
+
 # create iam role and instance profile
 module "airflow_role" {
     source = "../modules/iam_roles"
@@ -100,7 +117,8 @@ module "airflow_role" {
     policy_arns = [
         aws_iam_policy.invoke_lambda_policy.arn,
         aws_iam_policy.execute_ecs_task_policy.arn,
-        aws_iam_policy.access_s3_policy.arn
+        aws_iam_policy.access_s3_policy.arn,
+        aws_iam_policy.access_secretsmanager_policy.arn
     ]
     instance_profile_name = "airflow-server-instance-profile"
 }
