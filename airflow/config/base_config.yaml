@@ -15,7 +15,7 @@ aws:
       - "sg-0ac92d3470441e458"
     task: "estat-dbt-transform-task"
 snowflake:
-  snowflake_conn_id: "estat-airflow-snowflake-connection2"
+  snowflake_conn_id: "estat-airflow-snowflake-connection3"
   s3_stage_name: "s3_estat_stage"
   estat_database: "ESTAT_DB"
   estat_schema_stg: "ESTAT_STG"

@@ -24,13 +24,15 @@ mkdir -p ./dags ./logs ./plugins ./config
 echo -e "AIRFLOW_UID=$(id -u)" > .env
 sudo chmod +x /usr/lib/python3/dist-packages/cloudinit/config/cc_scripts_user.py
 
-# add secrets manager as secret backend
-region=$(curl -s http://169.254.169.254/latest/dynamic/instance-identity/document | grep '"region"' | awk -F'"' '{print $4}')
+### add secrets manager as secret backend
+# get a session token
+TOKEN=$(curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
+region=$(curl -H "X-aws-ec2-metadata-token: $TOKEN" -s "http://169.254.169.254/latest/dynamic/instance-identity/document" | grep '"region"' | awk -F'"' '{print $4}')
 connections_prefix="airflow/connections"
 SECRETS_BACKEND=airflow.providers.amazon.aws.secrets.secrets_manager.SecretsManagerBackend
-SECRETS_BACKEND_KWARGS={"connections_prefix": $connections_prefix, "region_name": $region}
-echo -e "SECRETS_BACKEND=$SECRETS_BACKEND" > .env
-echo -e "SECRETS_BACKEND_KWARGS=$SECRETS_BACKEND_KWARGS" > .env
+SECRETS_BACKEND_KWARGS="{\"connections_prefix\": \"$connections_prefix\", \"region_name\": \"$region\"}"
+echo -e "SECRETS_BACKEND=$SECRETS_BACKEND" >> .env
+echo -e "SECRETS_BACKEND_KWARGS=$SECRETS_BACKEND_KWARGS" >> .env
 
 echo "-----start airflow----" 
 sudo docker-compose up airflow-init
