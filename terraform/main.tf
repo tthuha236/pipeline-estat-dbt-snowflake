@@ -36,3 +36,8 @@ module "airflow" {
   key_name = var.airflow_key_name
   allowed_ip = var.allowed_ip
 }
+
+module "image_repo" {
+  source = "./image_repo"
+  name = "dbt_image_repo"
+}

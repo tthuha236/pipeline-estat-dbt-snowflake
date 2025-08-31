@@ -24,7 +24,7 @@ snowflake:
   default_warehouse: "COMPUTE_WH"
   sql_dir: "dags/sql/snowflake"
 dbt:
-  image: "estat_dbt_image"
+  image: "dbt_image"
 data_source:
   base_url: "https://www.e-stat.go.jp"
   
