@@ -9,12 +9,14 @@ sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-
 sudo chmod +x /usr/local/bin/docker-compose
 
 # download git project
+echo "-----clone project----" 
 git_url="https://github.com/tthuha236/pipeline-estat-dbt-snowflake.git"
 pj_name="pipeline-estat-dbt-snowflake"
 mkdir -p /tmp/$pj_name #temp folder to store code cloned from git repo 
 git clone $git_url /tmp/$pj_name
 
-# start airflow container
+### start airflow container
+echo "-----airflow configuration setting----" 
 mkdir -p /home/ubuntu/$pj_name/airflow # working folder for airflow
 cd /home/ubuntu/$pj_name/airflow
 cp /tmp/$pj_name/airflow/docker-compose.yaml ./
@@ -27,11 +29,15 @@ region=$(curl -s http://169.254.169.254/latest/dynamic/instance-identity/documen
 connections_prefix="airflow/connections"
 SECRETS_BACKEND=airflow.providers.amazon.aws.secrets.secrets_manager.SecretsManagerBackend
 SECRETS_BACKEND_KWARGS={"connections_prefix": $connections_prefix, "region_name": $region}
+echo -e "SECRETS_BACKEND=$SECRETS_BACKEND" > .env
+echo -e "SECRETS_BACKEND_KWARGS=$SECRETS_BACKEND_KWARGS" > .env
 
+echo "-----start airflow----" 
 sudo docker-compose up airflow-init
 sudo docker-compose up -d
 
 # copy dags and configs file from project to airflow
+echo "-----copy config and dags files----" 
 sudo chown -R ubuntu:ubuntu /home/ubuntu/$pj_name
 cp -r /tmp/$pj_name/airflow/config/* ./config/
 cp -r /tmp/$pj_name/airflow/dags/* ./dags/
