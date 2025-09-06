@@ -45,6 +45,7 @@ module "dbt_service" {
   source = "./dbt-service"
   cluster_name = "dbt_cluster"
   task_name = "dbt_task"
+  dbt_repo_name = "dbt_image"
   subnet_id = aws_default_subnet.default.id
   secrets_dbt_profile = "estat/dbt/profile_info"
   region = local.aws_region

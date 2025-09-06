@@ -8,12 +8,12 @@ aws:
     staging_folder: "stg"
   region_name: "ap-northeast-1"
   ecs:
-    cluster: "estat-dbt-cluster"
+    cluster: "dbt_cluster"
     subnets: 
       - "subnet-008f6f54e5005683e"
     securityGroups: 
       - "sg-0ac92d3470441e458"
-    task: "estat-dbt-transform-task"
+    task: "dbt_task"
 snowflake:
   snowflake_conn_id: "estat-airflow-snowflake-connection16"
   s3_stage_name: "s3_estat_stage"

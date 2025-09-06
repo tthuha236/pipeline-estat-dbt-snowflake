@@ -4,27 +4,14 @@ resource "aws_ecs_cluster" "dbt_service_cluster" {
 }
 
 ####### create ecs task
-# create repo for container image 
-resource "aws_ecr_repository" "dbt_image_repo" {
-  name                 = "dbt_image_repo"
-  image_tag_mutability = "MUTABLE"
-
-  image_scanning_configuration {
-    scan_on_push = true
-  }
+# get information of repo for container image 
+data "aws_ecr_repository" "repo" {
+  name  = var.dbt_repo_name
 }
 
 # define the secrets paramaters used in task
 data "aws_secretsmanager_secret" "dbt_profile_info" {
     name = var.secrets_dbt_profile
-}
-
-data "aws_secretsmanager_secret_version" "dbt_profile_info_value" {
-    secret_id = data.aws_secretsmanager_secret.dbt_profile_info.id
-}
-
-locals {
-    dbt_profile_info_json = jsondecode(data.aws_secretsmanager_secret_version.dbt_profile_info_value.secret_string)
 }
 
 # create iam_role for task
@@ -41,7 +28,7 @@ resource aws_iam_policy "access_secretsmanager_policy" {
             "secretsmanager:ListSecrets",
 			"secretsmanager:DescribeSecret",
         ],
-        "Resource": "arn:aws:secretsmanager:${var.region}:${var.account_id}:secret:estat/dbt/*"
+        "Resource": [data.aws_secretsmanager_secret.dbt_profile_info.arn]
         }
     ]
 })
@@ -80,7 +67,8 @@ module "dbt_task_role" {
     })
     policy_arns = [
         aws_iam_policy.access_secretsmanager_policy.arn,
-        aws_iam_policy.get_ecr_authorization_policy.arn
+        aws_iam_policy.get_ecr_authorization_policy.arn,
+        "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
     ]
 }
 
@@ -95,7 +83,7 @@ resource "aws_ecs_task_definition" "dbt_task" {
   container_definitions = jsonencode([
     {
       "name"   : "dbt_container"
-      "image"   : "${aws_ecr_repository.dbt_image_repo.repository_url}:latest"
+      "image"   : "${data.aws_ecr_repository.repo.repository_url}:latest"
       "essential": true
       "portMappings" = [
         {
@@ -106,15 +94,15 @@ resource "aws_ecs_task_definition" "dbt_task" {
       "secrets": [
           {
               name = "dbt_password",
-              valueFrom = local.dbt_profile_info_json.dbt_password
+              valueFrom = "${data.aws_secretsmanager_secret.dbt_profile_info.arn}:dbt_password::"
           },
           {
               name =  "dbt_user",
-              valueFrom = local.dbt_profile_info_json.dbt_user
+              valueFrom = "${data.aws_secretsmanager_secret.dbt_profile_info.arn}:dbt_user::"
           },
           {
               name =  "snowflake_account",
-              valueFrom = local.dbt_profile_info_json.snowflake_account
+              valueFrom = "${data.aws_secretsmanager_secret.dbt_profile_info.arn}:snowflake_account::"
           }
       ]
     }
