@@ -19,6 +19,10 @@ locals {
   aws_account_id = data.aws_caller_identity.current.account_id
 }
 
+resource "aws_default_subnet" "default" {
+  availability_zone = "ap-northeast-1a"
+}
+
 module "lambda" {
   source = "./lambda"
   environment = var.environment
@@ -37,7 +41,12 @@ module "airflow" {
   allowed_ip = var.allowed_ip
 }
 
-module "image_repo" {
-  source = "./image_repo"
-  name = "dbt_image_repo"
+module "dbt_service" {
+  source = "./dbt-service"
+  cluster_name = "dbt_cluster"
+  task_name = "dbt_task"
+  subnet_id = aws_default_subnet.default.id
+  secrets_dbt_profile = "estat/dbt/profile_info"
+  region = local.aws_region
+  account_id = local.aws_account_id
 }
