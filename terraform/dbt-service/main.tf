@@ -82,7 +82,7 @@ resource "aws_ecs_task_definition" "dbt_task" {
   execution_role_arn = module.dbt_task_role.role_arn
   container_definitions = jsonencode([
     {
-      "name"   : "dbt_container"
+      "name"   : "dbt_image"
       "image"   : "${data.aws_ecr_repository.repo.repository_url}:latest"
       "essential": true
       "portMappings" = [
