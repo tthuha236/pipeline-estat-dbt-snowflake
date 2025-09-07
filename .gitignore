@@ -13,3 +13,4 @@ dbt-config/
 terraform/.terraform/
 terraform/.terraform.lock.hcl
 logs/
+tests/

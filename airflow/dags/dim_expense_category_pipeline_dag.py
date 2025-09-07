@@ -11,18 +11,9 @@ from datetime import datetime
 import json
 import os
 
-# # aws lambda function name
-# lambda_crawl_data = "estat_crawl_newest_expense_data"
-# lambda_crawl_data = "estat_clean_expense_data"
-# target_folder = "expense"
-
-# # snowflake file info
-# sql_load_data_file_path = f"{AIRFLOW_ROOT_DIR}/{SNOWFLAKE_SQL_DIR}/{target_folder}/load_expense.sql"
-# TARGET_TABLE = "fact_expense_stg"
-
 # # data source info
 # STAT_URL = "https://www.e-stat.go.jp/stat-search/files?page=1&layout=datalist&toukei=00200561&tstat=000000330001&cycle=1&tclass1=000000330001&tclass2=000000330004&tclass3=000000330005&tclass4val=0"
-dag_id = "fact_expense_pipeline_dag"
+dag_id = "dim_expense_category_pipeline_dag"
 env = os.getenv("ENVIRONMENT", "")
 print(f"Running in ${env} environment")
 config = load_config(dag_id)
@@ -76,13 +67,10 @@ def check_lambda_response(**context):
 def skip_task():
     print("Skip task to invoke clean lambda function because no file is downloaded")
 
-def dummy_task(**context):
-    context["ti"].xcom_push(key="output_file", value="stg/expense/expense_202402_20250801.csv")
-
 with DAG(
     dag_id = dag_id,
     start_date = datetime(2025,7,28),
-    schedule_interval = '0 0 * * SUN',
+    schedule = None,
     catchup = False
 ) as dag:
 # read sql file to load data from s3 bucket to stg table in snowflake
@@ -96,9 +84,8 @@ with DAG(
         payload = json.dumps({
             "target_bucket": s3_bucket,
             "target_folder": raw_folder + "/" + target_folder,
-            "downloaded_list": f"{raw_folder}/{target_folder}/downloaded_list",
             "base_url": config["data_source"]["base_url"],
-            "stat_url": config["data_source"]["stat_url"]
+            "href": config["data_source"]["href"]
         }),
         region_name = region_name,
         invocation_type = "RequestResponse",
@@ -167,11 +154,5 @@ with DAG(
         region_name = region_name
     )
 
-    # dummy_task = PythonOperator(
-    #     task_id = "dummy_task",
-    #     python_callable = dummy_task
-    # )
-
     invoke_crawl_lambda >> check_crawl_lambda_response >> [invoke_clean_lambda, skip_task] 
     invoke_clean_lambda >> check_clean_lambda_response >> load_data_to_stg_table >> run_dbt
-    # dummy_task >> load_data_to_stg_table 

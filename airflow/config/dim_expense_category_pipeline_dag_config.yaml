@@ -1,0 +1,15 @@
+# aws lambda function name
+aws:
+  lambda: 
+    crawl_data: "estat-dim-expense-category-crawl-data-{{ env }}"
+    clean_data: "estat-dim-expense-category-clean-data-{{ env }}"
+  s3:
+    target_folder: "expense_category"
+snowflake:
+  sql:
+    load_data_file: "expense_category/load_expense_category.sql"
+    target_table: "dim_expense_category_stg"
+dbt:
+  model: "dim_expense_category"
+data_source:
+  href: "/data/kakei/kou2025/zuhyou/kouh2025.xlsx"
