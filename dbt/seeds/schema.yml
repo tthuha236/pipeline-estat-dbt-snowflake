@@ -4,7 +4,7 @@ seeds:
   - name: dim_location
     description: "References of location codes and names"
     columns:
-     - name: tiiki_code
+     - name: tiiki-code
        tests:
           - not_null
           - unique
