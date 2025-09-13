@@ -31,7 +31,7 @@ with DAG(
         overrides = {
             "containerOverrides": [{
                 "name": config["dbt"]["image"],
-                "command": ["seed","--debug"]
+                "command": ["seed","--debug","--log-format","text","--project-dir","/usr/app/"]
             }]
         },
         network_configuration= {
