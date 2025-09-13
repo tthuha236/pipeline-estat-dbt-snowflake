@@ -1,28 +1,7 @@
 from airflow import DAG
-from airflow.operators.python import PythonOperator, BranchPythonOperator
-from airflow.providers.amazon.aws.operators.lambda_function import LambdaInvokeFunctionOperator
 from airflow.providers.amazon.aws.operators.ecs import EcsRunTaskOperator
-from airflow.providers.snowflake.operators.snowflake import SnowflakeSqlApiOperator
-from airflow.providers.docker.operators.docker import DockerOperator
-from airflow.exceptions import AirflowFailException
 from utils.load_config_info import load_config
-from docker.types import Mount
 from datetime import datetime
-import json
-import os
-
-
-from airflow import DAG
-from airflow.operators.python import PythonOperator, BranchPythonOperator
-from airflow.providers.amazon.aws.operators.lambda_function import LambdaInvokeFunctionOperator
-from airflow.providers.amazon.aws.operators.ecs import EcsRunTaskOperator
-from airflow.providers.snowflake.operators.snowflake import SnowflakeSqlApiOperator
-from airflow.providers.docker.operators.docker import DockerOperator
-from airflow.exceptions import AirflowFailException
-from utils.load_config_info import load_config
-from docker.types import Mount
-from datetime import datetime
-import json
 import os
 
 # # data source info
