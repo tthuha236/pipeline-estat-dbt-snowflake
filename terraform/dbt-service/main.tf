@@ -54,6 +54,26 @@ resource aws_iam_policy "get_ecr_authorization_policy" {
     })
 }
 
+resource "aws_iam_policy" "ecs_task_cloudwatch_logs_policy" {
+  name        = "ECSTaskCloudwatchLogsPolicy"
+  description = "Allow ECS task to create and write to CloudWatch Logs"
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect   = "Allow"
+        Action   = [
+          "logs:CreateLogGroup",
+          "logs:CreateLogStream",
+          "logs:PutLogEvents"
+        ]
+        Resource = "*"
+      }
+    ]
+  })
+}
+
 module "dbt_task_role" {
     source = "../modules/iam_roles"
     role_name = "dbt_task_role"
@@ -68,8 +88,14 @@ module "dbt_task_role" {
     policy_arns = [
         aws_iam_policy.access_secretsmanager_policy.arn,
         aws_iam_policy.get_ecr_authorization_policy.arn,
+        aws_iam_policy.ecs_task_cloudwatch_logs_policy.arn,
         "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
     ]
+}
+# create log group
+resource "aws_cloudwatch_log_group" "ecs" {
+  name              = "/ecs/dbt_task"
+  retention_in_days = 7
 }
 
 # create task definition
@@ -104,7 +130,15 @@ resource "aws_ecs_task_definition" "dbt_task" {
               name =  "snowflake_account",
               valueFrom = "${data.aws_secretsmanager_secret.dbt_profile_info.arn}:snowflake_account::"
           }
-      ]
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+            "awslogs-group": "/ecs/dbt_task",
+            "awslogs-region": "ap-northeast-1",
+            "awslogs-stream-prefix": "ecs"
+        }
+        }
     }
   ])
 }
