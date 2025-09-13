@@ -1,0 +1,10 @@
+version: 2
+
+seeds:
+  - name: dim_location
+    description: "References of location codes and names"
+    columns:
+     - name: tiiki_code
+       tests:
+          - not_null
+          - unique
