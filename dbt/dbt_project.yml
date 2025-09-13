@@ -40,4 +40,15 @@ models:
       +schema: estat_mart
 seeds:
   estat_dbt:
-    +schema: estat_transform
+    +schema: estat_transformed
+    dim_location:
+      +column_types:
+        ken_code: varchar
+        sityouson_code: varchar
+        tiiki_code: varchar
+        ken_name: varchar
+        sityouson_name1: varchar
+        sityouson_name2: varchar
+        sityouson_name3: varchar
+        yomigana: varchar
+    
