@@ -12,4 +12,4 @@ snowflake:
 dbt:
   model: "dim_expense_category"
 data_source:
-  href: "/data/kakei/kou2025/zuhyou/kouh2025.xlsx"
+  href: "https://www.stat.go.jp/data/kakei/kou2025/zuhyou/kouh2025.xlsx"

@@ -84,12 +84,12 @@ with DAG(
         payload = json.dumps({
             "target_bucket": s3_bucket,
             "target_folder": raw_folder + "/" + target_folder,
-            "base_url": config["data_source"]["base_url"],
             "href": config["data_source"]["href"]
         }),
         region_name = region_name,
         invocation_type = "RequestResponse",
         )
+        
 
     check_crawl_lambda_response = BranchPythonOperator(
         task_id = "check_crawl_lambda_response",

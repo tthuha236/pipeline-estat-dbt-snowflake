@@ -6,10 +6,9 @@ from datetime import datetime
 s3 = boto3.client('s3')
 
 def lambda_handler(event, context):
-    file_url = event['base_url'] + event['href']
-    if not event['base_url'] or not event['href']:
+    if not event['href']:
         return {"status": 400, "body": json.dumps("Cannot get the base url and href from event")}
-    file_url = event['base_url'] + event['href']
+    file_url = event['href']
     try:
         response = requests.get(file_url)
         if response.status_code == 200:
