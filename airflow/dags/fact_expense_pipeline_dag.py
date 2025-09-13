@@ -82,7 +82,7 @@ def dummy_task(**context):
 with DAG(
     dag_id = dag_id,
     start_date = datetime(2025,7,28),
-    schedule_interval = '0 0 * * SUN',
+    schedule = '0 0 * * SUN',
     catchup = False
 ) as dag:
 # read sql file to load data from s3 bucket to stg table in snowflake
