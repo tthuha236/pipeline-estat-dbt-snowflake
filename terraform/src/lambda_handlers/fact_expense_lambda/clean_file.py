@@ -3,6 +3,7 @@ import pandas as pd
 import re
 import boto3
 import io
+import xlrd
 
 s3 = boto3.client('s3')
 

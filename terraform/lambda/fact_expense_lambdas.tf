@@ -16,7 +16,8 @@ resource "aws_lambda_function" "fact_expense_crawl_data" {
     runtime = var.runtime
     filename = data.archive_file.fact_expense_lambda_crawl_zip.output_path
     role = module.lambda_role.role_arn
-    layers = [aws_lambda_layer_version.libs_for_crawl_data.arn]
+    layers = [
+        aws_lambda_layer_version.libs_for_crawl_data.arn]
     timeout = 600
     memory_size = 128
     tags = {
@@ -30,7 +31,9 @@ resource "aws_lambda_function" "fact_expense_clean_data" {
     runtime = var.runtime
     filename = data.archive_file.fact_expense_lambda_clean_zip.output_path
     role = module.lambda_role.role_arn
-    layers = ["arn:aws:lambda:ap-northeast-1:336392948345:layer:AWSSDKPandas-Python311:22"]
+    layers = [
+        "arn:aws:lambda:ap-northeast-1:336392948345:layer:AWSSDKPandas-Python311:22",
+        aws_lambda_layer_version.libs_for_processing_excel.arn]
     timeout = 600
     memory_size = 128
     tags = {
