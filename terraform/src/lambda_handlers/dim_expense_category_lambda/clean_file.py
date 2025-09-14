@@ -1,5 +1,4 @@
 import json
-from terraform.src.lambda_handlers.expense_category_lambda.crawl_file import lambda_handler
 import pandas as pd
 import boto3
 import io
