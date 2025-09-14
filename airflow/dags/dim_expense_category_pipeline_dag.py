@@ -141,7 +141,7 @@ with DAG(
         overrides = {
             "containerOverrides": [{
                 "name": config["dbt"]["image"],
-                "command": ["run", "--select", config["dbt"]["model"]]
+                "command": ["dbt","run", "--select", config["dbt"]["model"]]
             }]
         },
         network_configuration= {
