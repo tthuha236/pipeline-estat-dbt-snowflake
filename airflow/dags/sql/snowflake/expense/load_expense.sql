@@ -7,5 +7,9 @@ COPY INTO {{ params.db }}.{{ params.stg_schema }}.{{ params.stg_table }}
                METADATA$FILENAME
         FROM @{{ params.s3_stage }}/{output_file}
    )
-    FILE_FORMAT = (TYPE='CSV' SKIP_HEADER=1)
+    FILE_FORMAT = (
+      TYPE='CSV' 
+      SKIP_HEADER=1
+      FIELD_OPTIONALLY_ENCLOSED_BY = '"'
+    )
 ;
