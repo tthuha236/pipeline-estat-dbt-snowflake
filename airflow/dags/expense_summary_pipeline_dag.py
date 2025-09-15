@@ -1,6 +1,6 @@
 from utils.load_config_info import load_config
 from airflow import DAG
-from airflow.operators.dummy import DummyOperator
+from airflow.providers.standard.operators.empty import EmptyOperator
 from datetime import datetime
 
 dag_id = "expense_summary_pipeline_dag"
@@ -12,5 +12,5 @@ with DAG(
     schedule=None,
     catchup=False
 ) as dag:
-    dummy_task = DummyOperator(task_id="dummy_task")
+    dummy_task = EmptyOperator(task_id="dummy_task")
     dummy_task
