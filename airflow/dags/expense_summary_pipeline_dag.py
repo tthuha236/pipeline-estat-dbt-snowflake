@@ -8,7 +8,7 @@ config = load_config(dag_id)
 
 with DAG(
     dag_id=dag_id,
-    start_date=datetime(2025,9,15),
+    start_date=datetime.utcnow(),
     schedule=None,
     catchup=False
 ) as dag:
