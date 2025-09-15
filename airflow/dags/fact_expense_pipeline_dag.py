@@ -3,13 +3,13 @@ from airflow.operators.python import PythonOperator, BranchPythonOperator
 from airflow.providers.amazon.aws.operators.lambda_function import LambdaInvokeFunctionOperator
 from airflow.providers.amazon.aws.operators.ecs import EcsRunTaskOperator
 from airflow.providers.snowflake.operators.snowflake import SnowflakeSqlApiOperator
-from airflow.providers.docker.operators.docker import DockerOperator
 from airflow.exceptions import AirflowFailException
 from utils.load_config_info import load_config
-from docker.types import Mount
 from datetime import datetime
 import json
 import os
+
+from airflow.operators.trigger_dagrun import TriggerDagRunOperator
 
 # # aws lambda function name
 # lambda_crawl_data = "estat_crawl_newest_expense_data"
@@ -167,11 +167,17 @@ with DAG(
         region_name = region_name
     )
 
+    trigger_child_dag = TriggerDagRunOperator(
+         task_id="trigger_child_dag",
+         trigger_dag_id="expense_summary_pipeline_dag",
+         wait_for_completion=False
+    )
+
     # dummy_task = PythonOperator(
     #     task_id = "dummy_task",
     #     python_callable = dummy_task
     # )
 
     invoke_crawl_lambda >> check_crawl_lambda_response >> [invoke_clean_lambda, skip_task] 
-    invoke_clean_lambda >> check_clean_lambda_response >> load_data_to_stg_table >> run_dbt
+    invoke_clean_lambda >> check_clean_lambda_response >> load_data_to_stg_table >> run_dbt >> trigger_child_dag
     # dummy_task >> load_data_to_stg_table 
