@@ -1,4 +1,4 @@
-from airflow.dags.utils.load_config_info import load_config
+from utils.load_config_info import load_config
 from airflow import DAG
 from airflow.operators.dummy import DummyOperator
 from datetime import datetime
