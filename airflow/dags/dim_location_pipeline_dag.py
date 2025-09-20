@@ -22,7 +22,7 @@ with DAG(
     catchup = False
 ) as dag:
 # read sql file to load data from s3 bucket to stg table in snowflake
-    run_dbt_seed = EcsRunTaskOperator(
+    run_dbt = EcsRunTaskOperator(
         task_id = "run_dbt_seed",
         cluster = config["aws"]["ecs"]["cluster"],
         aws_conn_id = aws_conn_id,
@@ -31,7 +31,7 @@ with DAG(
         overrides = {
             "containerOverrides": [{
                 "name": config["dbt"]["image"],
-                "command": ["dbt","seed","--log-level","debug","--log-format","text"]
+                "command": ["dbt","build","--select","dim_city_stg","dim_city_region_stg","dim_location"]
             }]
         },
         network_configuration= {
@@ -44,4 +44,4 @@ with DAG(
         region_name = region_name
     )
 
-    run_dbt_seed
+    run_dbt
