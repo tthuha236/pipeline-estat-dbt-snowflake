@@ -40,8 +40,8 @@ models:
       +schema: estat_mart
 seeds:
   estat_dbt:
-    +schema: estat_transformed
-    dim_location:
+    +schema: estat_stg
+    dim_city_stg:
       +column_types:
         ken_code: varchar
         sityouson_code: varchar
@@ -51,4 +51,8 @@ seeds:
         sityouson_name2: varchar
         sityouson_name3: varchar
         yomigana: varchar
+    dim_city_region_stg:
+      +column_types:
+        chihou: varchar
+        ken_name: varchar
     

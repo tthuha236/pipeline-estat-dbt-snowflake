@@ -1,0 +1,10 @@
+version: 2
+models:
+  - name: dim_location
+    description: | 
+      Dimension table combining city and regional information.
+      Built from dim_city_stg and dim_city_region_stg seeds
+    config:
+      materialzied: table
+      unique_key: [ken_name]
+    

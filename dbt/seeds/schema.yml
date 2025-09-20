@@ -1,10 +1,17 @@
 version: 2
 
 seeds:
-  - name: dim_location
-    description: "References of location codes and names"
+  - name: dim_city_stg
+    description: "References for city codes and names"
     columns:
      - name: tiiki_code
        tests:
+          - not_null
+          - unique
+  - name: dim_city_region_stg
+    description: "Mapping of city to region"
+    columns:
+      - name: ken_name
+        tests:
           - not_null
           - unique

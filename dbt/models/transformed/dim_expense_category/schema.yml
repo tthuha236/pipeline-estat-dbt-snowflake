@@ -13,4 +13,3 @@ sources:
       - name: input_table
         identifier: dim_expense_category_stg
         description: "Staging table for dim expense category"
-  
