@@ -3,6 +3,7 @@ models:
   - name: fact_expense
     config:
       materialized: incremental
+      incremental_strategy: merge
       unique_key: ['category_cd', 'area_cd', 'year', 'month']
     description: "Transformed table for fact expense"
 sources:

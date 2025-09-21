@@ -1,0 +1,8 @@
+version: 2
+models:
+  - name: agg_expense_by_sub_category
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: ['ken_name','year','month','sub_category_name']
+      description: "Aggregated fact_expense table at the sub expense category level"

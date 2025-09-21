@@ -24,7 +24,7 @@ def lambda_handler(event, context):
         "分類コード": str})
         print(df.shape)
         # only keep rows that have detailed expense 
-        category_cd_pattern = r"\d+\.\d+\.\d+"
+        category_cd_pattern = r"^(?!00000)\d+"
         filtered_df = df[df["分類コード"].astype(str).str.match(category_cd_pattern, na=False)]
 
         # dimension columns & fact columns

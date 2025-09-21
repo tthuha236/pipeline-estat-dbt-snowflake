@@ -36,7 +36,7 @@ models:
       +materialized: table
       +schema: estat_transformed
     mart:
-      +materialized: view
+      +materialized: table
       +schema: estat_mart
 seeds:
   estat_dbt:
