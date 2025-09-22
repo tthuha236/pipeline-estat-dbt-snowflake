@@ -1,0 +1,7 @@
+version: 2
+models:
+  - name: agg_expense_monthly_total
+    description: "Aggregate household expense data at a monthly grain for each city (ken_name)"
+    materialized: incremental
+    incremental_strategy: merge
+    unique_key: ['ken_name', 'year', 'month']
