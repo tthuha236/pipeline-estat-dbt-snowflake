@@ -3,6 +3,9 @@ import streamlit as st
 import plotly.express as px
 import snowflake.connector
 from streamlit_plotly_events import plotly_events
+import boto3
+import json
+
 
 st.set_page_config(
     page_title="二人以上の勤労世帯の家計支出ダッシュボード",
@@ -10,9 +13,20 @@ st.set_page_config(
 )
 
 #-------------Snowflake connection-------------
+def get_secret(secret_name, region_name):
+    # create a Secrets Manager client
+    session = boto3.session.Session()
+    client = session.client(
+        service_name='secretsmanager',
+        region_name=region_name
+    )
+    response = client.get_secret_value(SecretId=secret_name)
+    secret = response['SecretString']
+    return json.load(secret)
+
 @st.cache_resource(show_spinner=False)
 def get_conn():
-    cfg = st.secrets["snowflake"]
+    cfg = get_secret("streamlit/connections/snowflake","ap-northeast-1")
     return snowflake.connector.connect(
         user=cfg["user"],
         password=cfg["password"],
