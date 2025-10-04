@@ -10,9 +10,8 @@ docker build -t streamlit_app .
 docker run -d --name streamlit -p 8501:8501 streamlit_app
 
 # install nginx reverse proxy
-sudo ln -s /etc/nginx/sites-available/streamlit /etc/nginx/sites-enabled/
-sudo nginx -t
-sudo systemctl restart nginx
+sudo apt install nginx -y
+sudo apt install certbot python3-certbot-nginx -y
 
 # 5️⃣ Configure Nginx reverse proxy
 # --------------------------------------------------------------
@@ -34,5 +33,6 @@ server {
 }
 NGINX"
 
+sudo certbot --nginx -d kakei-dashboard.ddns.net
 sudo ln -sf /etc/nginx/sites-available/streamlit /etc/nginx/sites-enabled/
 sudo nginx -t && sudo systemctl restart nginx
