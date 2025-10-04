@@ -20,4 +20,4 @@ EXPOSE 8501
 ENV PYTHONUNBUFFERED=1
 
 # Command to run the Streamlit app
-CMD ["streamlit", "run", "app.py", "--server.port=8501", "--server.enableCORS=false"]
+CMD ["streamlit", "run", "app.py","--server.address=127.0.0.1" ,"--server.port=8501","--server.enableXsrfProtection=false", "--server.enableCORS=false"]
