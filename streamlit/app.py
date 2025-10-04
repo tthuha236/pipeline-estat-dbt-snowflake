@@ -22,7 +22,7 @@ def get_secret(secret_name, region_name):
     )
     response = client.get_secret_value(SecretId=secret_name)
     secret = response['SecretString']
-    return json.load(secret)
+    return json.loads(secret)
 
 @st.cache_resource(show_spinner=False)
 def get_conn():
