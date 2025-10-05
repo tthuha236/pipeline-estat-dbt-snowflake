@@ -15,3 +15,4 @@ terraform/.terraform.lock.hcl
 logs/
 tests/
 streamlit/.streamlit
+streamlit_local

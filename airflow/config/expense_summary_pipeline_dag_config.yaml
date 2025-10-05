@@ -1,0 +1,5 @@
+dbt:
+  models: 
+    - "agg_expense_by_main_category"
+    - "agg_expense_by_sub_category"
+    - "agg_expense_monthly_total"
